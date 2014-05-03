@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140503143112) do
+ActiveRecord::Schema.define(version: 20140503161325) do
 
   create_table "posts", force: true do |t|
-    t.string   "title"
+    t.string   "title",      null: false
+    t.string   "slug",       null: false
     t.text     "body"
-    t.string   "slug"
-    t.datetime "published"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "posts", ["slug"], name: "index_posts_on_slug", unique: true
 
 end
