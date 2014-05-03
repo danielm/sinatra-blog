@@ -19,15 +19,59 @@ end
 
 get "/" do
   @posts = Post.order("created_at DESC")
-  @title = "Welcome."
+  @title = "Bienvenido"
+  erb :"posts/index"
+end
+
+get "/acerca/" do
+  @title = "Acerca"
+  erb :"pages/acerca"
+end
+
+get "/contactar/" do
+  @title = "Contactar"
+  erb :"pages/contactar"
+end
+
+get "/:page/" do
+  @page = params[:page].to_i
+  if @page <= 1
+    redirect to('/'), 301
+  else
+    @page = @page - 1
+  end
+
+  @posts = Post.order("created_at DESC").limit(1).offset(@page * 1)
+
+  if @posts.length == 0
+    halt(404)
+  end
+
+  @title = "Bienvenido"
   erb :"posts/index"
 end
 
 get "/posts/:id/:slug.html" do
   @post = Post.find_by(id: params[:id], slug: params[:slug])
+
+  if @post.nil?
+    halt(404)
+  end
+
   @title = @post.title
   erb :"posts/view"
 end
+
+get "/error/not_found/" do
+  @title = "Not Found"
+  erb :"pages/not_found"
+end
+
+get "/error/application/" do
+  @title = "Application Error"
+  erb :"pages/application"
+end
+
 
 helpers do
   def title
@@ -37,4 +81,13 @@ helpers do
       "Welcome."
     end
   end
+end
+
+not_found do
+  redirect to('/error/not_found/')
+end
+
+error do
+  #'Sorry there was a nasty error - ' + env['sinatra.error'].name
+  redirect to('/error/application/')
 end
