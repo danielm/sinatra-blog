@@ -17,29 +17,31 @@ class Post < ActiveRecord::Base
   end
 end
 
-get "/" do
-  @posts = Post.order("created_at DESC")
-  @title = "Bienvenido"
-  erb :"posts/index"
-end
-
-get "/acerca/" do
+get "/acerca.html" do
   @title = "Acerca"
   erb :"pages/acerca"
 end
 
-get "/contactar/" do
+get "/contactar.html" do
   @title = "Contactar"
   erb :"pages/contactar"
 end
 
-get "/:page/" do
-  @page = params[:page].to_i
-  if @page <= 1
+get "/:page?/?" do
+  @page = params[:page] || -1
+  if @page == -1
+    @page = 0
+  elsif @page.to_i <= 1
     redirect to('/'), 301
   else
-    @page = @page - 1
+    @page = @page.to_i - 1
   end
+
+  per_page = 1
+
+  @count = Post.count
+
+  @pages = @count / per_page
 
   @posts = Post.order("created_at DESC").limit(1).offset(@page * 1)
 
@@ -62,12 +64,12 @@ get "/posts/:id/:slug.html" do
   erb :"posts/view"
 end
 
-get "/error/not_found/" do
+get "/error/not_found.html" do
   @title = "Not Found"
   erb :"pages/not_found"
 end
 
-get "/error/application/" do
+get "/error/application.html" do
   @title = "Application Error"
   erb :"pages/application"
 end
@@ -84,10 +86,10 @@ helpers do
 end
 
 not_found do
-  redirect to('/error/not_found/')
+  redirect to('/error/not_found.html')
 end
 
 error do
   #'Sorry there was a nasty error - ' + env['sinatra.error'].name
-  redirect to('/error/application/')
+  redirect to('/error/application.html')
 end
