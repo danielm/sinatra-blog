@@ -6,13 +6,22 @@ require './environments'
 
 enable :sessions
 
-# Modify all this
+# Authentication
 set :session_secret, '*&(^B234'
 set :user, 'admin'
 set :password, 'admin'
 
+# Post list
 set :per_page, 1
 
+# Contact Form
+set :email_username, ENV['SENDGRID_USERNAME'] || 'username@gmail.com'
+set :email_password, ENV['SENDGRID_PASSWORD'] || 'password'
+set :email_address, 'someone@host.com'
+set :email_service, ENV['EMAIL_SERVICE'] || 'gmail.com'
+set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
+
+# Model
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 255  }
   validates :slug, uniqueness: { case_sensitive: false }
@@ -25,6 +34,7 @@ class Post < ActiveRecord::Base
   end
 end
 
+# Pages
 get "/acerca.html" do
   @title = "Acerca"
   erb :"pages/acerca"
@@ -35,6 +45,27 @@ get "/contactar.html" do
   erb :"pages/contactar"
 end
 
+post '/contactar.html' do 
+  require 'pony'
+  Pony.mail(
+    :from => params[:name] + "<" + params[:email] + ">",
+    :to => settings.email_address,
+    :subject => params[:name] + " has contacted you",
+    :body => params[:message],
+    :via => :smtp,
+    :via_options => { 
+      :address              => 'smtp.' + settings.email_service, 
+      :port                 => '587', 
+      :enable_starttls_auto => true, 
+      :user_name            => settings.email_username, 
+      :password             => settings.email_password, 
+      :authentication       => :plain, 
+      :domain               => settings.email_domain
+    })
+  erb :"pages/contactar_success"
+end
+
+# Homepage (paginated)
 get "/:page?/?" do
   if params[:page].nil?
     @page = 0
@@ -61,6 +92,7 @@ get "/:page?/?" do
   erb :"posts/index"
 end
 
+# Read post
 get "/posts/:id/:slug.html" do
   @post = Post.find_by(id: params[:id], slug: params[:slug])
 
@@ -72,6 +104,7 @@ get "/posts/:id/:slug.html" do
   erb :"posts/view"
 end
 
+# Error messages
 get "/error/not_found.html" do
   @title = "Not Found"
   erb :"pages/not_found"
@@ -82,7 +115,7 @@ get "/error/application.html" do
   erb :"pages/application"
 end
 
-# Admin
+# Administration
 get "/admin/create" do
  protected!
  @title = "Create post"
