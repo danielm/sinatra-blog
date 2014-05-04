@@ -42,27 +42,51 @@ end
 
 get "/contactar.html" do
   @title = "Contactar"
+  @errors = {}
+  @values = params
+
   erb :"pages/contactar"
 end
 
-post '/contactar.html' do 
-  require 'pony'
-  Pony.mail(
-    :from => params[:name] + "<" + params[:email] + ">",
-    :to => settings.email_address,
-    :subject => params[:name] + " has contacted you",
-    :body => params[:message],
-    :via => :smtp,
-    :via_options => { 
-      :address              => 'smtp.' + settings.email_service, 
-      :port                 => '587', 
-      :enable_starttls_auto => true, 
-      :user_name            => settings.email_username, 
-      :password             => settings.email_password, 
-      :authentication       => :plain, 
-      :domain               => settings.email_domain
-    })
-  erb :"pages/contactar_success"
+post '/contactar.html' do
+  @title = "Contactar"
+  @values = params
+
+  # Validation
+  @errors = {}
+  [:name, :email, :message].each{|key| params[key] = (params[key] || "").strip }
+ 
+  @errors[:name] = "This field is required" unless given? params[:name]
+ 
+  if given? params[:email]
+    @errors[:email] = "Please enter a valid email address" unless valid_email? params[:email]
+  else
+    @errors[:email] = "This field is required"
+  end
+ 
+  @errors[:message] = "This field is required" unless given? params[:message]
+ 
+  if @errors.empty?
+    require 'pony'
+    Pony.mail(
+      :from => params[:name] + "<" + params[:email] + ">",
+      :to => settings.email_address,
+      :subject => params[:name] + " has contacted you",
+      :body => params[:message],
+      :via => :smtp,
+      :via_options => { 
+        :address              => 'smtp.' + settings.email_service, 
+        :port                 => '587', 
+        :enable_starttls_auto => true, 
+        :user_name            => settings.email_username, 
+        :password             => settings.email_password, 
+        :authentication       => :plain, 
+        :domain               => settings.email_domain
+      })
+    erb :"pages/contactar_success"
+  else
+    erb :"pages/contactar"
+  end
 end
 
 # Homepage (paginated)
@@ -143,6 +167,23 @@ helpers do
   def authorized?
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [settings.user, settings.password]
+  end
+
+  def valid_email?(email)
+    if email =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
+      true
+    else
+      false
+    end
+  end
+ 
+  def valid_url? url
+    return true if url == "http://"
+    !(url =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix).nil?
+  end
+ 
+  def given? field
+    !field.empty?
   end
 end
 

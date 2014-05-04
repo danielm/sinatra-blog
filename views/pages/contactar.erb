@@ -4,11 +4,29 @@
 
 <p>Please fill in the following form if you would like to contact us.</p>
 <form action="/contactar.html" method="post">
-  <label for="name">Your Name:</label>
-  <input type="text" name="name"><br />
-  <label for="email">Your email address:</label>
-  <input type="text" name="email"><br />
-  <label for="to">Your message:</label>
-  <textarea name="message" rows="16" cols="28"></textarea><br />
+  <div>
+  	<label for="name">Your Name:</label>
+  	<input type="text" name="name" value="<%= @values[:name] %>">
+  	<% if @errors[:name] %>
+  		<strong><%= @errors[:name] %></strong>
+  	<% end %>
+  </div>
+
+  <div>
+  	<label for="email">Your email address:</label>
+  	<input type="text" name="email" value="<%= @values[:email] %>">
+  	<% if @errors[:email] %>
+  		<strong><%= @errors[:email] %></strong>
+  	<% end %>
+  </div>
+
+  <div>
+  	<label for="to">Your message:</label>
+  	<textarea name="message" rows="16" cols="28"><%= @values[:message] %></textarea>
+  	<% if @errors[:message] %>
+  		<strong><%= @errors[:message] %></strong>
+  	<% end %>
+  </div>
+
   <input type="submit" value="Send">
 </form>
