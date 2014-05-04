@@ -4,6 +4,8 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './environments'
 
+enable :sessions
+
 set :per_page, 1
 
 class Post < ActiveRecord::Base
@@ -75,14 +77,34 @@ get "/error/application.html" do
   erb :"pages/application"
 end
 
+# Admin
+get "/admin" do
+ protected!
+
+ redirect to('/')
+end
+
 
 helpers do
+  include Rack::Utils
+
   def title
     if @title
       "#{@title}"
     else
       "Welcome."
     end
+  end
+
+  def protected!
+    return if authorized?
+    headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+    halt 401, "Not authorized\n"
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == ['admin', 'admin']
   end
 end
 
