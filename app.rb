@@ -4,6 +4,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './environments'
 
+set :per_page, 1
 
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 255  }
@@ -28,22 +29,22 @@ get "/contactar.html" do
 end
 
 get "/:page?/?" do
-  @page = params[:page] || -1
-  if @page == -1
+  if params[:page].nil?
     @page = 0
-  elsif @page.to_i <= 1
+  elsif params[:page].to_i <= 1
     redirect to('/'), 301
   else
-    @page = @page.to_i - 1
+    @page = params[:page].to_i - 1
   end
 
-  per_page = 1
+  count = Post.count.to_f
+  pages_n = (count / settings.per_page).ceil
 
-  @count = Post.count
+  @page_n = @page + 1
+  @have_next = ((@page_n + 1) <= pages_n) ? (@page_n + 1) : false
+  @have_previous = (@page_n > 1) ? (@page_n - 1) : false
 
-  @pages = @count / per_page
-
-  @posts = Post.order("created_at DESC").limit(1).offset(@page * 1)
+  @posts = Post.order("created_at DESC").limit(settings.per_page).offset(@page * settings.per_page)
 
   if @posts.length == 0
     halt(404)

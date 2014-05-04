@@ -5,4 +5,17 @@
    <p>Created: <%= post.created_at %></p>
  </li>
 <% end %>
+
+<% if @have_previous %>
+	<% if @have_previous > 1 %>
+		<a href="/<%= @have_previous %>">Anterior</a><br >
+	<% else %>
+		<a href="/">Anterior</a>
+	<% end %>
+<% end %>
+
+<% if @have_next %>
+	<a href="/<%= @have_next %>">Siguiente</a>
+<% end %>
+
 </ul>
