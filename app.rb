@@ -6,6 +6,11 @@ require './environments'
 
 enable :sessions
 
+# Modify all this
+set :session_secret, '*&(^B234'
+set :user, 'admin'
+set :password, 'admin'
+
 set :per_page, 1
 
 class Post < ActiveRecord::Base
@@ -78,12 +83,12 @@ get "/error/application.html" do
 end
 
 # Admin
-get "/admin" do
+get "/admin/create" do
  protected!
+ @title = "Create post"
 
- redirect to('/')
+ erb :"admin/create"
 end
-
 
 helpers do
   include Rack::Utils
@@ -104,7 +109,7 @@ helpers do
 
   def authorized?
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-    @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == ['admin', 'admin']
+    @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [settings.user, settings.password]
   end
 end
 
