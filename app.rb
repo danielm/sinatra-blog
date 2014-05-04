@@ -2,24 +2,29 @@
 
 require 'sinatra'
 require 'sinatra/activerecord'
+require "rack/csrf"
 require './environments'
 
 enable :sessions
 
-# Authentication
-set :session_secret, '*&(^B234'
-set :user, 'admin'
-set :password, 'admin'
+configure do
+  use Rack::Csrf, :raise => true, :check_only => ['POST:/contactar.html']
 
-# Post list
-set :per_page, 1
+  # Authentication
+  set :session_secret, '*&(^B234'
+  set :user, 'admin'
+  set :password, 'admin'
 
-# Contact Form
-set :email_username, ENV['SENDGRID_USERNAME'] || 'username@gmail.com'
-set :email_password, ENV['SENDGRID_PASSWORD'] || 'password'
-set :email_address, 'someone@host.com'
-set :email_service, ENV['EMAIL_SERVICE'] || 'gmail.com'
-set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
+  # Post list
+  set :per_page, 1
+
+  # Contact Form
+  set :email_username, ENV['SENDGRID_USERNAME'] || 'username@gmail.com'
+  set :email_password, ENV['SENDGRID_PASSWORD'] || 'password'
+  set :email_address, 'someone@host.com'
+  set :email_service, ENV['EMAIL_SERVICE'] || 'gmail.com'
+  set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
+end
 
 # Model
 class Post < ActiveRecord::Base
@@ -184,6 +189,14 @@ helpers do
  
   def given? field
     !field.empty?
+  end
+
+  def csrf_token
+    Rack::Csrf.csrf_token(env)
+  end
+
+  def csrf_tag
+    Rack::Csrf.csrf_tag(env)
   end
 end
 

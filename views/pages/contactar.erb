@@ -4,6 +4,7 @@
 
 <p>Please fill in the following form if you would like to contact us.</p>
 <form action="/contactar.html" method="post">
+  <%= csrf_tag %>
   <div>
   	<label for="name">Your Name:</label>
   	<input type="text" name="name" value="<%= @values[:name] %>">
