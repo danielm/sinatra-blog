@@ -8,6 +8,9 @@ require './environments'
 enable :sessions
 
 configure do
+  #set :raise_errors, false
+  #set :show_exceptions, false
+
   use Rack::Csrf, :raise => true, :check_only => ['POST:/contactar.html']
 
   # Authentication
@@ -95,7 +98,7 @@ post '/contactar.html' do
 end
 
 # Homepage (paginated)
-get "/:page?/?" do
+get "/" do
   if params[:page].nil?
     @page = 0
   elsif params[:page].to_i <= 1
@@ -145,11 +148,20 @@ get "/error/application.html" do
 end
 
 # Administration
-get "/admin/create" do
+get "/admin/posts" do
+ protected!
+ @title = "Panel"
+
+ @posts = Post.all()
+
+ erb :"admin/posts/index"
+end
+
+get "/admin/posts/create" do
  protected!
  @title = "Create post"
 
- erb :"admin/create"
+ erb :"admin/posts/create"
 end
 
 helpers do
