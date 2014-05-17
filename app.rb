@@ -160,6 +160,10 @@ end
 get "/admin/posts/create" do
  protected!
  @title = "Create post"
+ #@post = Post.new
+
+ @errors = {}
+ @values = params
 
  erb :"admin/posts/create"
 end
