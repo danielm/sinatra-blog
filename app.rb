@@ -304,3 +304,7 @@ error do
   #'Sorry there was a nasty error - ' + env['sinatra.error'].name
   redirect to('/error/application.html')
 end
+
+before do
+  redirect request.url.sub(/www\./, ''), 301 if request.host.start_with?("www.")
+end
