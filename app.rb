@@ -165,7 +165,7 @@ get "/admin/posts/create" do
  @title = "Create post"
 
  @errors = {}
- @values = params
+ @values = {}
 
  erb :"admin/posts/create"
 end
@@ -173,24 +173,62 @@ end
 post "/admin/posts/create" do
  protected!
  @title = "Create post"
- @values = params
+ @values = params[:post]
 
  # Validation
  @errors = {}
- [:title, :body].each{|key| params[key] = (params[key] || "").strip }
+ [:title, :body].each{|key| @values[key] = (@values[key] || "").strip }
  
- @errors[:title] = "This field is required" unless given? params[:title]
+ @errors[:title] = "This field is required" unless given? @values[:title]
  
- @errors[:body] = "This field is required" unless given? params[:body]
+ @errors[:body] = "This field is required" unless given? @values[:body]
 
  if @errors.empty?
-   @post = Post.new(params)
+   @post = Post.new(@values)
    if @post.save
      redirect "/admin/posts", :notice => 'New post created'
    end
  end
 
  erb :"admin/posts/create"
+end
+
+get "/admin/posts/edit/:id" do
+  protected!
+  @title = "Edit post"
+
+  @post = Post.find(params[:id])
+
+  @errors = {}  
+  @values = @post
+
+  erb :"admin/posts/edit"
+end
+
+post "/admin/posts/edit/:id" do
+  protected!
+  @title = "Edit post"
+
+  @post = Post.find(params[:id])
+  @errors = {}
+  @values = params[:post]
+
+  [:title, :body].each{|key| @values[key] = (@values[key] || "").strip }
+ 
+  @errors[:title] = "This field is required" unless given? @values[:title]
+ 
+  @errors[:body] = "This field is required" unless given? @values[:body]
+
+  if @errors.empty?
+    @post.update(@values)
+    if @post.save
+      redirect "/admin/posts", :notice => 'Post changes saved'
+    end
+  end
+
+  @values[:id] = @post[:id]
+
+  erb :"admin/posts/edit"
 end
 
 helpers do

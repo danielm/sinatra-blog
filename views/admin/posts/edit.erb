@@ -1,9 +1,9 @@
-<h1>Administracion <small>Create Post</small></h1>
+<h1>Administracion <small>Edit Post #<%= @values[:id] %></small></h1>
 
 <a href="/admin/posts">Back to List	</a>
 
 
-<form action="/admin/posts/create" method="post" role="form">
+<form action="/admin/posts/edit/<%= @values[:id] %>" method="post" role="form">
  <div class="form-group">
    <label for="post_title">Title:</label>
    <br>
