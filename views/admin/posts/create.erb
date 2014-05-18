@@ -7,12 +7,18 @@
  <div class="form-group">
    <label for="post_title">Title:</label>
    <br>
-   <input id="post_title" class="form-control" name="post[title]" type="text" value="<%= @values[:name] %>" style="width=90%"/>
+   <input id="post_title" class="form-control" name="title" type="text" value="<%= @values[:title] %>" style="width=90%"/>
+   <% if @errors[:title] %>
+  		<div><strong><%= @errors[:title] %></strong></div>
+  	<% end %>
  </div>
  <div class="form-group">
    <label for="post_body">Body:</label>
    <br>
-   <textarea id="post_body" name="post[body]" class="form-control" rows="10"><%= @values[:body] %></textarea>
+   <textarea id="post_body" name="body" class="form-control" rows="10"><%= @values[:body] %></textarea>
+   <% if @errors[:body] %>
+  		<div><strong><%= @errors[:body] %></strong></div>
+  	<% end %>
  </div>
  <button type="submit" class="btn btn-success">Submit</button>
 </form>

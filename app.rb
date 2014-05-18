@@ -2,6 +2,9 @@
 
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'sinatra/flash'
+require 'sinatra/redirect_with_flash'
+
 require "rack/csrf"
 require './environments'
 
@@ -160,10 +163,32 @@ end
 get "/admin/posts/create" do
  protected!
  @title = "Create post"
- #@post = Post.new
 
  @errors = {}
  @values = params
+
+ erb :"admin/posts/create"
+end
+
+post "/admin/posts/create" do
+ protected!
+ @title = "Create post"
+ @values = params
+
+ # Validation
+ @errors = {}
+ [:title, :body].each{|key| params[key] = (params[key] || "").strip }
+ 
+ @errors[:title] = "This field is required" unless given? params[:title]
+ 
+ @errors[:body] = "This field is required" unless given? params[:body]
+
+ if @errors.empty?
+   @post = Post.new(params)
+   if @post.save
+     redirect "/admin/posts", :notice => 'New post created'
+   end
+ end
 
  erb :"admin/posts/create"
 end

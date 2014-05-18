@@ -13,6 +13,12 @@
 
 
  </ul>
+
+<% if flash[:notice] %>
+ <p class="alert alert-success"><%= flash[:notice] %>
+<% end %>
+
+ 
  <%= yield %>
 </body>
 </html>
