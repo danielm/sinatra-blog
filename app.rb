@@ -231,6 +231,15 @@ post "/admin/posts/edit/:id" do
   erb :"admin/posts/edit"
 end
 
+get "/admin/posts/delete/:id" do
+  protected!
+  @post = Post.find(params[:id])
+
+  if @post.delete
+    redirect "/admin/posts", :notice => 'Post deleted'
+  end
+end
+
 helpers do
   include Rack::Utils
 

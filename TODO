@@ -1,14 +1,4 @@
-MANEJAR EXCEPCION Rack::Csrf::InvalidCsrfToken  
-
-X LIST POSTS
-
-CREATE POST
-EDIT POST
-DELETE POSTS
-
 if page > total_pages
-
-
 
 custom csrf usano securerandom gem
 
