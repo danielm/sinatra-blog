@@ -9,7 +9,7 @@ gem "sinatra-activerecord"
 gem "sinatra-flash"
 gem "sinatra-redirect-with-flash"
 gem "pony"
-gem "rack_csrf"
+gem "securerandom"
 
 group :development do
  gem "sqlite3"

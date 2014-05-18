@@ -5,7 +5,7 @@ require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'sinatra/redirect_with_flash'
 
-require "rack/csrf"
+require 'securerandom'
 require './environments'
 
 enable :sessions
@@ -13,8 +13,6 @@ enable :sessions
 configure do
   #set :raise_errors, false
   #set :show_exceptions, false
-
-  use Rack::Csrf, :raise => true, :check_only => ['POST:/contactar.html']
 
   # Authentication
   set :session_secret, '*&(^B234'
@@ -84,6 +82,8 @@ post '/contactar.html' do
   end
  
   @errors[:message] = "This field is required" unless given? params[:message]
+
+  @errors[:token] = "CSRF Token invali" unless valid_csrf? params[:token]
  
   if @errors.empty?
     require 'pony'
@@ -288,11 +288,15 @@ helpers do
   end
 
   def csrf_token
-    Rack::Csrf.csrf_token(env)
-  end
+    token = SecureRandom.base64(32)
 
-  def csrf_tag
-    Rack::Csrf.csrf_tag(env)
+    env['rack.session']['csrf_token'] = token
+
+    token
+  end 
+
+  def valid_csrf?(token)
+    return true if env['rack.session']['csrf_token'] == token
   end
 end
 
