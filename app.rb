@@ -45,6 +45,14 @@ class Post < ActiveRecord::Base
   end
 end
 
+# Feed
+get "/feed" do
+  content_type 'application/rss+xml', :charset => 'utf-8'
+  @posts = Post.order("created_at DESC").limit(settings.per_page)
+
+  erb :"feed", :layout => false 
+end
+
 # Pages
 get "/acerca.html" do
   @title = "Acerca"
