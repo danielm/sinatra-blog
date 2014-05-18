@@ -38,6 +38,10 @@ class Post < ActiveRecord::Base
 
   before_save :create_slug
 
+  def rfc_date
+    Time.parse(self.created_at.to_s).rfc822()
+  end 
+
   def create_slug
     self.slug = self.title.parameterize
   end
@@ -57,6 +61,7 @@ get "/acerca.html" do
   erb :"pages/acerca"
 end
 
+# Contact Form
 get "/contactar.html" do
   @title = "Contactar"
   @errors = {}
@@ -168,6 +173,7 @@ get "/admin/posts" do
  erb :"admin/posts/index"
 end
 
+# Create Post
 get "/admin/posts/create" do
  protected!
  @title = "Create post"
@@ -201,6 +207,7 @@ post "/admin/posts/create" do
  erb :"admin/posts/create"
 end
 
+# Edit Post
 get "/admin/posts/edit/:id" do
   protected!
   @title = "Edit post"
@@ -239,6 +246,7 @@ post "/admin/posts/edit/:id" do
   erb :"admin/posts/edit"
 end
 
+# Delete post
 get "/admin/posts/delete/:id" do
   protected!
   @post = Post.find(params[:id])
@@ -276,11 +284,6 @@ helpers do
     else
       false
     end
-  end
- 
-  def valid_url? url
-    return true if url == "http://"
-    !(url =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix).nil?
   end
  
   def given? field

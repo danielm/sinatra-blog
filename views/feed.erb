@@ -10,7 +10,7 @@
     <title><%= post.title %></title>
     <link>http://daniel.uy/posts/<%= post.id %>/<%= post.slug %>.html</link>
     <description><%= post.body %></description>
-    <pubDate><%= Time.parse(post.created_at.to_s).rfc822() %></pubDate>
+    <pubDate><%= post.rfc_date %></pubDate>
     <guid>http://daniel.uy/posts/<%= post.id %>/<%= post.slug %>.html</guid>
   </item>
 <% end %>
