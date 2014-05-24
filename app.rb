@@ -50,7 +50,7 @@ end
 # Feed
 get "/feed" do
   content_type 'application/rss+xml', :charset => 'utf-8'
-  @posts = Post.order("created_at DESC").limit(settings.per_page)
+  @posts = Post.order("published_on DESC").limit(settings.per_page)
 
   erb :"feed", :layout => false 
 end
@@ -85,7 +85,7 @@ post '/contactar.html' do
   else
     @errors[:email] = "This field is required"
   end
- 
+
   @errors[:message] = "This field is required" unless given? params[:message]
 
   @errors[:token] = "CSRF Token invali" unless valid_csrf? params[:token]
@@ -130,9 +130,9 @@ get "/" do
   @have_next = ((@page_n + 1) <= pages_n) ? (@page_n + 1) : false
   @have_previous = (@page_n > 1) ? (@page_n - 1) : false
 
-  @posts = Post.order("created_at DESC").limit(settings.per_page).offset(@page * settings.per_page)
+  @posts = Post.order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
 
-  if @posts.length == 0
+  if @posts.length == 0 && @page > 0
     halt(404)
   end
 
@@ -168,7 +168,7 @@ get "/admin/posts" do
  protected!
  @title = "Panel"
 
- @posts = Post.all()
+ @posts = Post.order("published_on DESC")
 
  erb :"admin/posts/index"
 end
@@ -197,6 +197,12 @@ post "/admin/posts/create" do
  
  @errors[:body] = "This field is required" unless given? @values[:body]
 
+ if given? @values[:published_on]
+  @errors[:published_on] = "Please enter a valid date: yyyy-mm-dd hh:mm:ss" unless valid_date? @values[:published_on]
+ else
+  @errors[:published_on] = "This field is required"
+ end
+
  if @errors.empty?
    @post = Post.new(@values)
    if @post.save
@@ -215,7 +221,14 @@ get "/admin/posts/edit/:id" do
   @post = Post.find(params[:id])
 
   @errors = {}  
-  @values = @post
+  @values = {
+    :id => @post.id,
+    :title => @post.title,
+    :body => @post.body
+  }
+
+  string = @post.published_on.to_s
+  @values[:published_on] = Time.parse(string).strftime("%Y-%m-%d %H:%M:%S")
 
   erb :"admin/posts/edit"
 end
@@ -233,6 +246,12 @@ post "/admin/posts/edit/:id" do
   @errors[:title] = "This field is required" unless given? @values[:title]
  
   @errors[:body] = "This field is required" unless given? @values[:body]
+
+  if given? @values[:published_on]
+    @errors[:published_on] = "Please enter a valid date: yyyy-mm-dd hh:mm:ss" unless valid_date? @values[:published_on]
+  else
+    @errors[:published_on] = "This field is required"
+  end
 
   if @errors.empty?
     @post.update(@values)
@@ -285,6 +304,14 @@ helpers do
       false
     end
   end
+
+  def valid_date?(date)
+    if date =~ /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/
+      true
+    else
+      false
+    end
+  end
  
   def given? field
     !field.empty?
@@ -312,6 +339,7 @@ error do
   redirect to('/error/application.html')
 end
 
+# Redirect www. to our root domain
 before do
   redirect request.url.sub(/www\./, ''), 301 if request.host.start_with?("www.")
 end

@@ -5,7 +5,7 @@
 <ul>
 <% @posts.each do |post| %>
  <li>
-   #<%= post.id %> - <%= post.title %> -
+   #<%= post.id %> - <%= post.published_on %> - <%= post.title %> -
    <a href="/admin/posts/edit/<%= post.id %>">Edit</a> - <a href="/admin/posts/delete/<%= post.id %>">Delete</a>
  </li>
 <% end %>
