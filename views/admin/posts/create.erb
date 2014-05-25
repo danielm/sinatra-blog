@@ -1,17 +1,19 @@
 <h1>Administracion <small>Create Post</small></h1>
 
-<a href="/admin/posts">Back to List	</a>
-
+<div class="admin-bar">
+  <a class="btn btn-default btn-default" href="/admin/posts" role="button">&laquo; Back to list</a>
+</div>
 
 <form action="/admin/posts/create" method="post" role="form">
-
-  <% if @post.errors %>
-    Error:
-    <ul>
-    <% @post.errors.full_messages.each do |e| %>
-         <li><%= e %></li>
-    <% end %>
-  </ul>
+  <% if @post.errors.count > 0 %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+        <% @post.errors.full_messages.each do |e| %>
+           <li><%= e %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 
  <div class="form-group">
@@ -20,7 +22,7 @@
    <input id="post_title" class="form-control" name="post[title]" type="text" value="<%= @post.title %>" style="width=90%"/>  	
  </div>
 
- <div class="form-group">
+ <div class="form-group ">
    <label for="post_published_on">Publish Date (yyyy-mm-dd hh:mm:ss):</label>
    <br>
    <input id="post_published_on" class="form-control" name="post[published_on]" type="text" value="<%= @post.published_on %>" style="width=90%"/>
@@ -29,7 +31,7 @@
  <div class="form-group">
    <label for="post_body">Body:</label>
    <br>
-   <textarea id="post_body" name="post[body]" class="form-control" rows="10"><%= @post.body %></textarea>
+   <textarea rows="5" id="post_body" name="post[body]" class="form-control" rows="10"><%= @post.body %></textarea>
  </div>
  <button type="submit" class="btn btn-success">Submit</button>
 </form>

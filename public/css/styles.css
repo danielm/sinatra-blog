@@ -20,10 +20,10 @@ body {
 
 
 .duy-main {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  /*font-family: Georgia, "Times New Roman", Times, serif;
   color: #555;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.5;*/
   
 
 }
@@ -126,4 +126,33 @@ code {
 .english {
   background:url(img/en.png) left center no-repeat;
   padding-left:20px !important;
+}
+
+
+@media (max-width: 1200px) {
+  #forkme {
+    display: none;
+  }
+}
+
+.contact-form {
+  margin-top: 15px;
+}
+
+.error-block {
+  color: #A94442;
+}
+
+.draft {
+  color: #F0AD4E;
+  font-style: italic
+}
+
+.admin-bar {
+  margin-bottom: 15px;
+  text-align: right;
+}
+
+.list-actions {
+  text-align: center;
 }

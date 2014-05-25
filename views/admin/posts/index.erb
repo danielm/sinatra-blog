@@ -1,12 +1,37 @@
 <h1>Administracion <small>Posts</small></h1>
 
-<a href="/admin/posts/create">New Post</a>
+<div class="admin-bar">
+	<a class="btn btn-default btn-success" href="/admin/posts/create" role="button">+New Post</a>
+</div>
 
-<ul>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Publish Date</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
 <% @posts.each do |post| %>
- <li>
-   #<%= post.id %> - <%= post.published_on %> - <%= post.title %> -
-   <a href="/admin/posts/edit/<%= post.id %>">Edit</a> - <a href="/admin/posts/delete/<%= post.id %>">Delete</a>
- </li>
+		<tr>
+			<td><%= post.id %></td>
+			<td><%= post.title %></td>
+			<td>
+				<% if post.published_on %>
+					<%= post.published_on %>
+				<% else %>
+					<span class="draft">Draft</a>
+				<% end %>
+			</td>
+			<td class="list-actions">
+				<a role="button" title="Edit" class="btn btn-default" href="/admin/posts/edit/<%= post.id %>"><span class="glyphicon glyphicon-list"></span></a>
+
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/posts/delete/<%= post.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+			</td>
+		</tr>
 <% end %>
-</ul>
+	</tbody>
+</table>

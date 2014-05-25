@@ -1,36 +1,36 @@
-<H1>
-	Contactar
-</h1>
+  <h1>Contactar</h1>
 
-<p>Please fill in the following form if you would like to contact us.</p>
-<form action="/contactar.html" method="post">
-  <input type="hidden" name="token" value="<%= csrf_token %>" />
-  <% if @errors[:token] %>
-      <strong><%= @errors[:token] %></strong>
+  <p>Please fill in the following form if you would like to contact me.</p>
+
+  <form action="/contactar.html" method="post" role="form" class="contact-form">
+    <input type="hidden" name="token" value="<%= csrf_token %>" />
+    <% if @errors[:token] %>
+    <!--<strong><%= @errors[:token] %></strong>-->
     <% end %>
-  <div>
-  	<label for="name">Your Name:</label>
-  	<input type="text" name="name" value="<%= @values[:name] %>">
-  	<% if @errors[:name] %>
-  		<strong><%= @errors[:name] %></strong>
-  	<% end %>
-  </div>
 
-  <div>
-  	<label for="email">Your email address:</label>
-  	<input type="text" name="email" value="<%= @values[:email] %>">
-  	<% if @errors[:email] %>
-  		<strong><%= @errors[:email] %></strong>
-  	<% end %>
-  </div>
+    <div class="form-group">
+      <label class="control-label" for="name">Your Name:</label>
+      <input type="text" class="form-control" name="name" value="<%= @values[:name] %>">
+      <% if @errors[:name] %>
+      <span class="help-block error-block"><%= @errors[:name] %></span>
+      <% end %>
+    </div>
 
-  <div>
-  	<label for="to">Your message:</label>
-  	<textarea name="message" rows="16" cols="28"><%= @values[:message] %></textarea>
-  	<% if @errors[:message] %>
-  		<strong><%= @errors[:message] %></strong>
-  	<% end %>
-  </div>
+    <div class="form-group">
+      <label class="control-label" for="email">Your email address:</label>
+      <input type="text" class="form-control" name="email" value="<%= @values[:email] %>">
+      <% if @errors[:email] %>
+      <span class="help-block error-block"><%= @errors[:email] %></span>
+      <% end %>
+    </div>
 
-  <input type="submit" value="Send">
-</form>
+    <div class="form-group">
+      <label class="control-label" for="to">Your message:</label>
+      <textarea class="form-control" rows="5" name="message" rows="16" cols="28"><%= @values[:message] %></textarea>
+      <% if @errors[:message] %>
+      <span class="help-block error-block"><%= @errors[:message] %></span>
+      <% end %>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Send</button>
+  </form>
