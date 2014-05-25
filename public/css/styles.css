@@ -60,8 +60,11 @@ body {
   font-size: 40px;
 }
 .duy-info {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #999;
+
+  background:url(img/clock.png) left center no-repeat;
+  padding-left:20px !important;
 }
 
 .duy-title a:hover {
@@ -122,5 +125,5 @@ code {
 
 .english {
   background:url(img/en.png) left center no-repeat;
-  padding-left: 20px;
+  padding-left:20px !important;
 }

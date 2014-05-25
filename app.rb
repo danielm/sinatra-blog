@@ -276,6 +276,10 @@ helpers do
   def valid_csrf?(token)
     return true if env['rack.session']['csrf_token'] == token
   end
+
+  def current?(path='')
+    request.path_info=='/'+path ? 'active':  nil
+  end
 end
 
 not_found do
