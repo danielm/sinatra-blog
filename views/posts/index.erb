@@ -7,6 +7,9 @@
 </div>
 <% end %>
 
+<% if @posts.count == 0 %>
+    <p class="empty-blog">No posts were found</p>
+<% else %>
 <ul class="pagination pagination-lg">
 <% if @have_previous %>
   <% if @have_previous > 1 %>
@@ -29,5 +32,5 @@
 <% else %>
   <li class="disabled"><a>Siguiente &raquo;</a></li>
 <% end %>
-
 </ul>
+<% end %>
