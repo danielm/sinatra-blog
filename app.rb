@@ -50,7 +50,7 @@ end
 # Feed
 get "/feed" do
   content_type 'application/rss+xml', :charset => 'utf-8'
-  @posts = Post.order("published_on DESC").limit(settings.per_page)
+  @posts = Post.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page)
 
   erb :"feed", :layout => false 
 end
@@ -123,14 +123,14 @@ get "/" do
     @page = params[:page].to_i - 1
   end
 
-  count = Post.count.to_f
+  count = Post.count(:published_on).to_f
   pages_n = (count / settings.per_page).ceil
 
   @page_n = @page + 1
   @have_next = ((@page_n + 1) <= pages_n) ? (@page_n + 1) : false
   @have_previous = (@page_n > 1) ? (@page_n - 1) : false
 
-  @posts = Post.order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
+  @posts = Post.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
 
   if @posts.length == 0 && @page > 0
     halt(404)
@@ -178,8 +178,7 @@ get "/admin/posts/create" do
  protected!
  @title = "Create post"
 
- @errors = {}
- @values = {}
+ @post = Post.new
 
  erb :"admin/posts/create"
 end
@@ -187,27 +186,10 @@ end
 post "/admin/posts/create" do
  protected!
  @title = "Create post"
- @values = params[:post]
 
- # Validation
- @errors = {}
- [:title, :body].each{|key| @values[key] = (@values[key] || "").strip }
- 
- @errors[:title] = "This field is required" unless given? @values[:title]
- 
- @errors[:body] = "This field is required" unless given? @values[:body]
-
- if given? @values[:published_on]
-  @errors[:published_on] = "Please enter a valid date: yyyy-mm-dd hh:mm:ss" unless valid_date? @values[:published_on]
- else
-  @errors[:published_on] = "This field is required"
- end
-
- if @errors.empty?
-   @post = Post.new(@values)
-   if @post.save
-     redirect "/admin/posts", :notice => 'New post created'
-   end
+ @post = Post.new(params[:post])
+ if @post.save
+   redirect "/admin/posts", :notice => 'New post created'
  end
 
  erb :"admin/posts/create"
@@ -220,15 +202,7 @@ get "/admin/posts/edit/:id" do
 
   @post = Post.find(params[:id])
 
-  @errors = {}  
-  @values = {
-    :id => @post.id,
-    :title => @post.title,
-    :body => @post.body
-  }
-
-  string = @post.published_on.to_s
-  @values[:published_on] = Time.parse(string).strftime("%Y-%m-%d %H:%M:%S")
+  #@values[:published_on] = Time.parse(string).strftime("%Y-%m-%d %H:%M:%S")
 
   erb :"admin/posts/edit"
 end
@@ -238,29 +212,11 @@ post "/admin/posts/edit/:id" do
   @title = "Edit post"
 
   @post = Post.find(params[:id])
-  @errors = {}
-  @values = params[:post]
 
-  [:title, :body].each{|key| @values[key] = (@values[key] || "").strip }
- 
-  @errors[:title] = "This field is required" unless given? @values[:title]
- 
-  @errors[:body] = "This field is required" unless given? @values[:body]
-
-  if given? @values[:published_on]
-    @errors[:published_on] = "Please enter a valid date: yyyy-mm-dd hh:mm:ss" unless valid_date? @values[:published_on]
-  else
-    @errors[:published_on] = "This field is required"
+  @post.update(params[:post])
+  if @post.save
+    redirect "/admin/posts", :notice => 'Post changes saved'
   end
-
-  if @errors.empty?
-    @post.update(@values)
-    if @post.save
-      redirect "/admin/posts", :notice => 'Post changes saved'
-    end
-  end
-
-  @values[:id] = @post[:id]
 
   erb :"admin/posts/edit"
 end
@@ -299,14 +255,6 @@ helpers do
 
   def valid_email?(email)
     if email =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
-      true
-    else
-      false
-    end
-  end
-
-  def valid_date?(date)
-    if date =~ /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/
       true
     else
       false

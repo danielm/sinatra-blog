@@ -4,31 +4,32 @@
 
 
 <form action="/admin/posts/create" method="post" role="form">
+
+  <% if @post.errors %>
+    Error:
+    <ul>
+    <% @post.errors.full_messages.each do |e| %>
+         <li><%= e %></li>
+    <% end %>
+  </ul>
+  <% end %>
+
  <div class="form-group">
    <label for="post_title">Title:</label>
    <br>
-   <input id="post_title" class="form-control" name="post[title]" type="text" value="<%= @values[:title] %>" style="width=90%"/>
-   <% if @errors[:title] %>
-  		<div><strong><%= @errors[:title] %></strong></div>
-  	<% end %>
+   <input id="post_title" class="form-control" name="post[title]" type="text" value="<%= @post.title %>" style="width=90%"/>  	
  </div>
 
  <div class="form-group">
    <label for="post_published_on">Publish Date (yyyy-mm-dd hh:mm:ss):</label>
    <br>
-   <input id="post_published_on" class="form-control" name="post[published_on]" type="text" value="<%= @values[:published_on] %>" style="width=90%"/>
-   <% if @errors[:published_on] %>
-      <div><strong><%= @errors[:published_on] %></strong></div>
-    <% end %>
+   <input id="post_published_on" class="form-control" name="post[published_on]" type="text" value="<%= @post.published_on %>" style="width=90%"/>
  </div>
 
  <div class="form-group">
    <label for="post_body">Body:</label>
    <br>
-   <textarea id="post_body" name="post[body]" class="form-control" rows="10"><%= @values[:body] %></textarea>
-   <% if @errors[:body] %>
-  		<div><strong><%= @errors[:body] %></strong></div>
-  	<% end %>
+   <textarea id="post_body" name="post[body]" class="form-control" rows="10"><%= @post.body %></textarea>
  </div>
  <button type="submit" class="btn btn-success">Submit</button>
 </form>
