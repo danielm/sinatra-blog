@@ -15,9 +15,9 @@ configure do
   #set :show_exceptions, false
 
   # Authentication
-  set :session_secret, '*&(^B234'
-  set :user, 'admin'
-  set :password, 'admin'
+  set :session_secret, ENV['SESSION_SECRET'] || '*&(^B234'
+  set :user, ENV['ADMIN_USER'] || 'admin'
+  set :password, ENV['ADMIN_PASS'] || 'admin'
 
   # Post list
   set :per_page, 1
@@ -25,7 +25,7 @@ configure do
   # Contact Form
   set :email_username, ENV['SENDGRID_USERNAME'] || 'username@gmail.com'
   set :email_password, ENV['SENDGRID_PASSWORD'] || 'password'
-  set :email_address, 'someone@host.com'
+  set :email_address, ENV['CONTACT_EMAIL'] || 'user@host.com'
   set :email_service, ENV['EMAIL_SERVICE'] || 'gmail.com'
   set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
 end
@@ -78,17 +78,17 @@ post '/contactar.html' do
   @errors = {}
   [:name, :email, :message].each{|key| params[key] = (params[key] || "").strip }
  
-  @errors[:name] = "This field is required" unless given? params[:name]
+  @errors[:name] = "Este campo es requerido" unless given? params[:name]
  
   if given? params[:email]
-    @errors[:email] = "Please enter a valid email address" unless valid_email? params[:email]
+    @errors[:email] = "Porfavor ingrese una dirección de e-mail válida" unless valid_email? params[:email]
   else
-    @errors[:email] = "This field is required"
+    @errors[:email] = "Este campo es requerido"
   end
 
-  @errors[:message] = "This field is required" unless given? params[:message]
+  @errors[:message] = "Este campo es requerido" unless given? params[:message]
 
-  @errors[:token] = "CSRF Token invali" unless valid_csrf? params[:token]
+  @errors[:token] = "CSRF Token invalid" unless valid_csrf? params[:token]
  
   if @errors.empty?
     require 'pony'
@@ -201,8 +201,6 @@ get "/admin/posts/edit/:id" do
   @title = "Edit post"
 
   @post = Post.find(params[:id])
-
-  #@values[:published_on] = Time.parse(string).strftime("%Y-%m-%d %H:%M:%S")
 
   erb :"admin/posts/edit"
 end

@@ -160,3 +160,7 @@ code {
 .empty-blog {
   text-align: center;
 }
+
+#disqus_thread {
+  margin-top: 25px;
+}
