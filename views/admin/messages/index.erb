@@ -1,0 +1,35 @@
+<h1>Administracion <small>Contact messages</small></h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>From</th>
+			<th>Date</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
+<% @messages.each do |msg| %>
+		<tr>
+			<td><%= msg.id %></td>
+			<td>
+				<a href="/admin/messages/read/<%= msg.id %>"><%= msg.name %></a>
+				<% if !msg.read %><em>NEW</em><% end %>
+			</td>
+			<td>
+				<%= msg.created_at %>
+			</td>
+			<td class="list-actions">
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/messages/delete/<%= msg.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+			</td>
+		</tr>
+<% end %>
+<% if @messages.count == 0 %>
+		<tr>
+			<td colspan="4">No messages were found</td>
+		</tr>
+<% end %>
+	</tbody>
+</table>

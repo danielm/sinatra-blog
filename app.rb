@@ -180,6 +180,10 @@ post "/admin/posts/edit/:id" do
   @title = "Edit post"
 
   @post = Post.find(params[:id])
+  
+  if @post.nil?
+    halt(404)
+  end
 
   @post.update(params[:post])
   if @post.save
@@ -194,13 +198,60 @@ get "/admin/posts/delete/:id" do
   protected!
   @post = Post.find(params[:id])
 
+  if @post.nil?
+    halt(404)
+  end
+
   if @post.delete
     redirect "/admin/posts", :notice => 'Post deleted'
   end
 end
 
+# Contact Messages
+get "/admin/messages" do
+ protected!
+ @title = "Contact Messsages"
+
+ @messages = Message.order('read ASC').order("created_at DESC")
+
+ erb :"admin/messages/index"
+end
+
+# Delete post
+get "/admin/messages/delete/:id" do
+  protected!
+  @message = Message.find(params[:id])
+
+  if @message.nil?
+    halt(404)
+  end
+
+  if @message.delete
+    redirect "/admin/messages", :notice => 'Message deleted'
+  end
+end
+
+# Edit Post
+get "/admin/messages/read/:id" do
+  protected!
+  @title = "Read message"
+
+  @message = Message.find(params[:id])
+
+  if @message.nil?
+    halt(404)
+  end
+
+  @message.read = true
+  @message.save
+
+  erb :"admin/messages/read"
+end
+
 helpers do
   include Rack::Utils
+
+  alias_method :h, :escape_html
 
   def title
     if @title
