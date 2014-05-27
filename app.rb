@@ -1,4 +1,4 @@
-# app.rb
+# encoding: utf-8
 
 require 'sinatra'
 require 'sinatra/activerecord'
@@ -21,16 +21,9 @@ configure do
 
   # Post list
   set :per_page, 1
-
-  # Contact Form
-  set :email_username, ENV['SENDGRID_USERNAME'] || 'username@gmail.com'
-  set :email_password, ENV['SENDGRID_PASSWORD'] || 'password'
-  set :email_address, ENV['CONTACT_EMAIL'] || 'user@host.com'
-  set :email_service, ENV['EMAIL_SERVICE'] || 'gmail.com'
-  set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
 end
 
-# Model
+# Posts Model
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 255  }
   validates :slug, uniqueness: { case_sensitive: false }
@@ -45,6 +38,14 @@ class Post < ActiveRecord::Base
   def create_slug
     self.slug = self.title.parameterize
   end
+end
+
+# Messages Model
+class Message < ActiveRecord::Base
+  validates :name, presence: true, length: { maximum: 255  }
+  validates :email, presence: true, length: { maximum: 255  }
+  validates :body, presence: true
+  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, :message => "is not a valid e-mail address"
 end
 
 # Feed
@@ -64,53 +65,22 @@ end
 # Contact Form
 get "/contactar.html" do
   @title = "Contactar"
-  @errors = {}
-  @values = params
-
+  @message = Message.new
+  
   erb :"pages/contactar"
 end
 
 post '/contactar.html' do
   @title = "Contactar"
-  @values = params
+  @message = Message.new(params[:message])
 
-  # Validation
-  @errors = {}
-  [:name, :email, :message].each{|key| params[key] = (params[key] || "").strip }
- 
-  @errors[:name] = "Este campo es requerido" unless given? params[:name]
- 
-  if given? params[:email]
-    @errors[:email] = "Porfavor ingrese una dirección de e-mail válida" unless valid_email? params[:email]
-  else
-    @errors[:email] = "Este campo es requerido"
-  end
+  g2g = valid_csrf? params[:token]
+  
+  if g2g && @message.save
+    redirect "/", :notice => 'Thanks for your message. We\'ll be in touch soon.'
+   end
 
-  @errors[:message] = "Este campo es requerido" unless given? params[:message]
-
-  @errors[:token] = "CSRF Token invalid" unless valid_csrf? params[:token]
- 
-  if @errors.empty?
-    require 'pony'
-    Pony.mail(
-      :from => params[:name] + "<" + params[:email] + ">",
-      :to => settings.email_address,
-      :subject => params[:name] + " has contacted you",
-      :body => params[:message],
-      :via => :smtp,
-      :via_options => { 
-        :address              => 'smtp.' + settings.email_service, 
-        :port                 => '587', 
-        :enable_starttls_auto => true, 
-        :user_name            => settings.email_username, 
-        :password             => settings.email_password, 
-        :authentication       => :plain, 
-        :domain               => settings.email_domain
-      })
-    erb :"pages/contactar_success"
-  else
-    erb :"pages/contactar"
-  end
+  erb :"pages/contactar"
 end
 
 # Homepage (paginated)
@@ -249,18 +219,6 @@ helpers do
   def authorized?
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [settings.user, settings.password]
-  end
-
-  def valid_email?(email)
-    if email =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
-      true
-    else
-      false
-    end
-  end
- 
-  def given? field
-    !field.empty?
   end
 
   def csrf_token

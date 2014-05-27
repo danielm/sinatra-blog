@@ -8,8 +8,7 @@ gem "activerecord"
 gem "sinatra-activerecord"
 gem "sinatra-flash"
 gem "sinatra-redirect-with-flash"
-gem "pony"
-gem "securerandom"
+gem "rubysl-securerandom"
 
 group :development do
  gem "sqlite3"

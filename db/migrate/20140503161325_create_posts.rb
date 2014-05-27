@@ -9,5 +9,13 @@ class CreatePosts < ActiveRecord::Migration
     end
 
     add_index :posts, :slug, :unique => true
+    
+    create_table :messages do |t|
+      t.string :name, :null => false
+      t.string :email, :null => false
+      t.text :body
+      t.boolean :read, :default => false
+      t.timestamps
+    end
   end
 end
