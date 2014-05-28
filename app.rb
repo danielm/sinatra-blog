@@ -35,6 +35,10 @@ class Post < ActiveRecord::Base
     Time.parse(self.created_at.to_s).rfc822()
   end 
 
+  def url
+    "post/#{self.slug}.html"
+  end
+
   def create_slug
     self.slug = self.title.parameterize
   end
@@ -85,6 +89,8 @@ end
 
 # Homepage (paginated)
 get "/" do
+  @title = "Inicio"
+  
   if params[:page].nil?
     @page = 0
   elsif params[:page].to_i <= 1
@@ -106,13 +112,12 @@ get "/" do
     halt(404)
   end
 
-  @title = "Bienvenido"
   erb :"posts/index"
 end
 
 # Read post
-get "/posts/:id/:slug.html" do
-  @post = Post.find_by(id: params[:id], slug: params[:slug])
+get "/post/:slug.html" do
+  @post = Post.find_by(slug: params[:slug])
 
   if @post.nil?
     halt(404)
@@ -217,7 +222,7 @@ get "/admin/messages" do
  erb :"admin/messages/index"
 end
 
-# Delete post
+# Delete message
 get "/admin/messages/delete/:id" do
   protected!
   @message = Message.find(params[:id])
@@ -231,7 +236,7 @@ get "/admin/messages/delete/:id" do
   end
 end
 
-# Edit Post
+# Read message
 get "/admin/messages/read/:id" do
   protected!
   @title = "Read message"
@@ -286,6 +291,10 @@ helpers do
 
   def current?(path='')
     request.path_info=='/'+path ? 'active':  nil
+  end
+  
+  def link(url='')
+    request.base_url + "/" + url
   end
 end
 

@@ -3,15 +3,15 @@
 
 <channel>
   <title>Daniel.uy Blog</title>
-  <link>http://www.daniel.uy</link>
+  <link><%=link %></link>
   <description>Mi blog en español!</description>
 <% @posts.each do |post| %>
   <item>
     <title><%= post.title %></title>
-    <link>http://daniel.uy/posts/<%= post.id %>/<%= post.slug %>.html</link>
+    <link><%=link post.url %></link>
     <description><%= post.body %></description>
     <pubDate><%= post.rfc_date %></pubDate>
-    <guid>http://daniel.uy/posts/<%= post.id %>/<%= post.slug %>.html</guid>
+    <guid><%=link post.url %></guid>
   </item>
 <% end %>
 </channel>

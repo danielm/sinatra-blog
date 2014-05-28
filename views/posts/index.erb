@@ -1,6 +1,6 @@
 <% @posts.each do |post| %>
 <div class="duy-post">
-  <h2 class="duy-title"><a href="/posts/<%= post.id %>/<%= post.slug %>.html"><%= post.title %></a></h2>
+  <h2 class="duy-title"><a href="<%=link post.url %>"><%= post.title %></a></h2>
   <p class="duy-info"><%= post.published_on %> by <a href="/acerca.html">Daniel</a></p>
 
   <%= post.body %>
