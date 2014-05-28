@@ -32,11 +32,11 @@ class Post < ActiveRecord::Base
   before_save :create_slug
 
   def rfc_date
-    Time.parse(self.created_at.to_s).rfc822()
+    Time.parse(self.published_on.to_s).rfc822()
   end 
 
   def url
-    "post/#{self.slug}.html"
+    "post/" + self.published_on.strftime("%Y/%m/%d") + "/#{self.slug}.html"
   end
 
   def create_slug
@@ -116,7 +116,7 @@ get "/" do
 end
 
 # Read post
-get "/post/:slug.html" do
+get "/post/:year/:month/:day/:slug.html" do
   @post = Post.find_by(slug: params[:slug])
 
   if @post.nil?
