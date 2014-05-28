@@ -166,3 +166,8 @@ code {
 #disqus_thread {
   margin-top: 25px;
 }
+
+.rss {
+  background:url(img/rss.png) left center no-repeat;
+  padding-left:28px !important;
+}
