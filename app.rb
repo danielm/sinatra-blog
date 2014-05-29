@@ -7,13 +7,11 @@ require 'sinatra/redirect_with_flash'
 
 require 'securerandom'
 require './environments'
+require './model'
 
 enable :sessions
 
 configure do
-  #set :raise_errors, false
-  #set :show_exceptions, false
-
   # Authentication
   set :session_secret, ENV['SESSION_SECRET'] || '*&(^B234'
   set :user, ENV['ADMIN_USER'] || 'admin'
@@ -21,78 +19,6 @@ configure do
 
   # Post list
   set :per_page, 1
-end
-
-# Tag/Post relations
-class Tagging < ActiveRecord::Base
-  belongs_to :post
-  belongs_to :tag
-end
-
-# Tag
-class Tag < ActiveRecord::Base
-  has_many :taggings, :dependent => :destroy
-  has_many :posts, :through => :taggings
-
-  before_save :create_slug
-
-  def url
-    "tag/#{self.slug}/"
-  end
-
-  def create_slug
-    self.slug = self.name.parameterize
-  end
-end
-
-# Posts Model
-class Post < ActiveRecord::Base
-  has_many :taggings, :dependent => :destroy
-  has_many :tags, :through => :taggings
-
-  validates :title, presence: true, length: { minimum: 5, maximum: 255  }
-  validates :slug, uniqueness: { case_sensitive: false }
-  validates :body, presence: true
-
-  before_save :create_slug
-  after_save :assign_tags
-
-  attr_writer :tag_names
-
-  def tag_names
-    @tag_names || tags.map(&:name).join(',')
-  end
-
-  def rfc_date
-    Time.parse(self.published_on.to_s).rfc822()
-  end 
-
-  def url
-    "post/" + self.published_on.strftime("%Y/%m/%d") + "/#{self.slug}.html"
-  end
-
-  def create_slug
-    self.slug = self.title.parameterize
-  end
-
-private
-  
-  def assign_tags
-    if @tag_names
-      self.tags = @tag_names.split(',').map do |name|
-        slug = name.parameterize.strip
-        Tag.where(:slug => slug).first_or_create(:name => name)
-      end
-    end
-  end
-end
-
-# Messages Model
-class Message < ActiveRecord::Base
-  validates :name, presence: true, length: { maximum: 255  }
-  validates :email, presence: true, length: { maximum: 255  }
-  validates :body, presence: true
-  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, :message => "is not a valid e-mail address"
 end
 
 # Feed
@@ -142,7 +68,7 @@ get "/" do
     @page = params[:page].to_i - 1
   end
 
-  count = Post.count(:published_on).to_f
+  count = Post.where.not({published_on: nil}).count.to_f
   pages_n = (count / settings.per_page).ceil
 
   @page_n = @page + 1
@@ -156,6 +82,26 @@ get "/" do
   end
 
   erb :"posts/index"
+end
+
+# Tag (paginated)
+get "/tag/:slug/" do
+  @title = "Inicio"
+  
+  @tag = Tag.find_by(slug: params[:slug])
+
+  if @tag.nil?
+    halt(404)
+  end
+
+  @page = 0
+  @page_n = 1
+  @have_next = false
+  @have_previous = false
+
+  @posts = {}
+
+  erb :"posts/tag"
 end
 
 # Read post

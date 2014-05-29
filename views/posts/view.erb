@@ -5,9 +5,11 @@
   <div class="duy-body">
 	<%= @post.body %>
   </div>
-  <div>
+  <% if @post.tags.count > 0 %>
+  <div class="duy-tags">
     Tags: <% @post.tags.each do |tag| %><a href="<%=link tag.url %>"><span class="badge"><%= tag.name.titleize %></span></a> <% end %>
   </div>
+  <% end %>
 </div>
 
 <div id="disqus_thread"></div>
