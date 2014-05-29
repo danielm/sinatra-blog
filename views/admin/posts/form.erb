@@ -12,13 +12,13 @@
  <div class="form-group">
    <label for="post_title">Title:</label>
    <br>
-   <input id="post_title" class="form-control" name="post[title]" type="text" value="<%= @post.title %>" style="width=90%"/>  	
+   <input id="post_title" class="form-control" name="post[title]" type="text" value="<%= @post.title %>" />  	
  </div>
 
  <div class="form-group ">
    <label for="post_published_on">Publish Date (yyyy-mm-dd hh:mm:ss):</label>
    <br>
-   <input id="post_published_on" class="form-control" name="post[published_on]" type="text" value="<%= @post.published_on %>" style="width=90%"/>
+   <input id="post_published_on" class="form-control" name="post[published_on]" type="text" value="<%= @post.published_on %>" />
  </div>
 
  <div class="form-group">
@@ -26,4 +26,11 @@
    <br>
    <textarea rows="5" id="post_body" name="post[body]" class="form-control" rows="10"><%= @post.body %></textarea>
  </div>
+ 
+ <div class="form-group ">
+   <label for="tag_names">Tags:</label>
+   <br>
+   <input id="tag_names" class="form-control" name="post[tag_names]" type="text" value="<%= @post.tag_names %>" />
+ </div>
+ 
  <button type="submit" class="btn btn-success">Submit</button>

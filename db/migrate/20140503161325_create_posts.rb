@@ -17,5 +17,17 @@ class CreatePosts < ActiveRecord::Migration
       t.boolean :read, :default => false
       t.timestamps
     end
+    
+    create_table :taggings do |t|
+      t.integer :post_id
+      t.integer :tag_id
+    end
+    
+    create_table :tags do |t|
+      t.string :name, :null => false
+      t.string :slug, :null => false
+    end
+    
+    add_index :tags, :slug, :unique => true
   end
 end

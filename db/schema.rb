@@ -33,4 +33,16 @@ ActiveRecord::Schema.define(version: 20140503161325) do
 
   add_index "posts", ["slug"], name: "index_posts_on_slug", unique: true
 
+  create_table "taggings", force: true do |t|
+    t.integer "post_id"
+    t.integer "tag_id"
+  end
+
+  create_table "tags", force: true do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+  end
+
+  add_index "tags", ["slug"], name: "index_tags_on_slug", unique: true
+
 end

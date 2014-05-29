@@ -2,7 +2,12 @@
   <h2 class="duy-title"><a href="<%=link @post.url %>"><%= @post.title.titleize %></a></h2>
   <p class="duy-info"><%= @post.published_on %> by <a href="/acerca.html">Daniel</a></p>
 
-  <%= @post.body %>
+  <div class="duy-body">
+	<%= @post.body %>
+  </div>
+  <div>
+    Tags: <% @post.tags.each do |tag| %><a href="<%=link tag.url %>"><span class="badge"><%= tag.name.titleize %></span></a> <% end %>
+  </div>
 </div>
 
 <div id="disqus_thread"></div>
