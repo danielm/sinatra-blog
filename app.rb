@@ -94,12 +94,26 @@ get "/tag/:slug/" do
     halt(404)
   end
 
-  @page = 0
-  @page_n = 1
-  @have_next = false
-  @have_previous = false
+  if params[:page].nil?
+    @page = 0
+  elsif params[:page].to_i <= 1
+    redirect to('/'), 301
+  else
+    @page = params[:page].to_i - 1
+  end
 
-  @posts = {}
+  count = @tag.posts.where.not({published_on: nil}).count.to_f
+  pages_n = (count / settings.per_page).ceil
+
+  @page_n = @page + 1
+  @have_next = ((@page_n + 1) <= pages_n) ? (@page_n + 1) : false
+  @have_previous = (@page_n > 1) ? (@page_n - 1) : false
+
+  @posts = @tag.posts.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
+
+  if @posts.length == 0 && @page > 0
+    halt(404)
+  end
 
   erb :"posts/tag"
 end

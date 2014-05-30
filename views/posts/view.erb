@@ -5,7 +5,7 @@
   <div class="duy-body">
 	<%= @post.body %>
   </div>
-  <% if @post.tags.count > 0 %>
+  <% if @post.tags.length > 0 %>
   <div class="duy-tags">
     Tags: <% @post.tags.each do |tag| %><a href="<%=link tag.url %>"><span class="badge"><%= tag.name.titleize %></span></a> <% end %>
   </div>
