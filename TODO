@@ -1,4 +1,3 @@
 - Tag page: list posts
 - Tag cloud
-- Review Query N+1:
-   Ej: (0.4ms)  SELECT COUNT(count_column) FROM (SELECT  1 AS count_column FROM "posts"  WHERE
+
