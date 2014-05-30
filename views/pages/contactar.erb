@@ -5,7 +5,7 @@
 
   <p>Para contactarse porfavor complete el siguiente formulario; ó diríjase la página de <a href="/acerca.html">Acerca</a> por otras formas de contacto.</p>
 
-  <form action="/contactar.html" method="post" role="form" class="contact-form">
+  <form action="<%= link 'contactar.html' %>" method="post" role="form" class="contact-form">
     <input type="hidden" name="token" value="<%= csrf_token %>" />
     <% if @message.errors.count > 0 %>
       <div class="alert alert-danger alert-dismissable">

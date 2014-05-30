@@ -12,10 +12,10 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" type="text/css">
-    <link href="/css/styles.css" rel="stylesheet">
+    <link href="<%= link 'css/styles.css' %>" rel="stylesheet">
 
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="alternate" title="RSS Daniel.uy" href="/feed" type="application/rss+xml" />
+    <link rel="shortcut icon" href="<%= link 'favicon.ico' %>" />
+    <link rel="alternate" title="RSS Daniel.uy" href="<%= link 'feed' %>" type="application/rss+xml" />
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -40,16 +40,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Daniel Morales</a>
+          <a class="navbar-brand" href="<%= link %>">Daniel Morales</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="<%= current? %>"><a href="/">Inicio</a></li>
-            <li class="<%= current?('acerca.html') %>"><a href="/acerca.html">Acerca</a></li>
-            <li class="<%= current?('contactar.html') %>"><a href="/contactar.html">Contactar</a></li>
+            <li class="<%= current? %>"><a href="<%= link %>">Inicio</a></li>
+            <li class="<%= current?('acerca.html') %>"><a href="<%= link 'acerca.html' %>">Acerca</a></li>
+            <li class="<%= current?('contactar.html') %>"><a href="<%= link 'contactar.html' %>">Contactar</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a class="rss" href="/rss" target="_blank">RSS</a></li>
+            <li><a class="rss" href="<%= link 'feed' %>" target="_blank">RSS</a></li>
             <li><a class="english" href="http://blog.daniel.com.uy/">English</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -103,7 +103,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="/js/app.main.js"></script>
+    <script type="text/javascript" src="<%= link 'js/app.main.js' %>"></script>
 
     <a href="https://github.com/danielm/sinatra-blog" id="forkme" target="_blank"><img style="position: absolute; z-index:1031; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
 

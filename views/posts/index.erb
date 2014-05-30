@@ -13,9 +13,9 @@
 <ul class="pagination pagination-lg">
 <% if @have_previous %>
   <% if @have_previous > 1 %>
-  <li><a href="/?page=<%= @have_previous %>">&laquo; Anterior</a></li>
+  <li><a href="<%= link %>?page=<%= @have_previous %>">&laquo; Anterior</a></li>
   <% else %>
-  <li><a href="/">&laquo; Anterior</a></li>
+  <li><a href="<%= link %>">&laquo; Anterior</a></li>
   <% end %>
 <% else %>
   <li class="disabled"><a>&laquo; Anterior</a></li>
@@ -28,7 +28,7 @@
 <li><a href="#">5</a></li>-->
 
 <% if @have_next %>
-  <li><a href="/?page=<%= @have_next %>">Siguiente &raquo;</a></li>
+  <li><a href="<%= link %>?page=<%= @have_next %>">Siguiente &raquo;</a></li>
 <% else %>
   <li class="disabled"><a>Siguiente &raquo;</a></li>
 <% end %>
