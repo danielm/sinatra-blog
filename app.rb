@@ -196,7 +196,7 @@ get "/admin/posts/delete/:id" do
     halt(404)
   end
 
-  if @post.delete
+  if @post.destroy
     redirect "/admin/posts", :notice => 'Post deleted'
   end
 end
@@ -220,7 +220,7 @@ get "/admin/messages/delete/:id" do
     halt(404)
   end
 
-  if @message.delete
+  if @message.destroy
     redirect "/admin/messages", :notice => 'Message deleted'
   end
 end

@@ -54,9 +54,9 @@ private
   
   def assign_tags
     if @tag_names
-      self.tags = @tag_names.split(',').map do |name|
-        slug = name.parameterize.strip
-        Tag.where(:slug => slug).first_or_create(:name => name)
+      self.tags = @tag_names.split(/, */).map do |name|
+        name.strip!
+        Tag.where(:slug => name.parameterize).first_or_create(:name => name)
       end
     end
   end
