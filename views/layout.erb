@@ -91,12 +91,14 @@
             <script id="fedora-banner" type="text/javascript" src="http://fedoraproject.org/static/js/release-counter-ext.js?lang=es&width=200px"></script>
           </div>
 
-          <!--<div class="sidebar-module">
-            <h4>Archives</h4>
+          <div class="sidebar-module">
+            <h4>Tags</h4>
             <ol class="list-unstyled">
-              <li><a href="#">January 2014</a></li>
+            <% tags.each do |tag| %>
+              <li><a href="<%= link tag.url %>"><%= tag.name %></a></li>
+            <% end %>
             </ol>
-          </div>-->
+          </div>
         </div>
       </div>
     </div>

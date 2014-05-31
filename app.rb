@@ -336,6 +336,10 @@ helpers do
   def link(url='')
     request.base_url + "/" + url
   end
+
+  def tags
+    Tag.all.order('name ASC')
+  end
 end
 
 not_found do
