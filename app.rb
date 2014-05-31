@@ -17,8 +17,8 @@ configure do
   set :user, ENV['ADMIN_USER'] || 'admin'
   set :password, ENV['ADMIN_PASS'] || 'admin'
 
-  # Post list
-  set :per_page, 1
+  # How many posts per page
+  set :per_page, ENV['PER_PAGE'] || 1
 end
 
 # Feed
@@ -27,6 +27,15 @@ get "/feed" do
   @posts = Post.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page)
 
   erb :"feed", :layout => false 
+end
+
+# Admin
+get "/admin" do
+  protected!
+
+  env['rack.session']['logged_in'] = true;
+
+  redirect '/admin/posts'
 end
 
 # Pages
@@ -302,6 +311,10 @@ helpers do
   def authorized?
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [settings.user, settings.password]
+  end
+
+  def logged_in?
+    env['rack.session']['logged_in'] == true
   end
 
   def csrf_token

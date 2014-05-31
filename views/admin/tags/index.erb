@@ -1,0 +1,28 @@
+<h1>Administracion <small>Tags</small></h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
+<% @tags.each do |tag| %>
+		<tr>
+			<td><%= tag.id %></td>
+			<td><%= tag.name %></td>
+			<td class="list-actions">
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/tags/delete/<%= tag.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+			</td>
+		</tr>
+<% end %>
+<% if @tags.length == 0 %>
+		<tr>
+			<td colspan="2">No tags were found</td>
+		</tr>
+<% end %>
+	</tbody>
+</table>

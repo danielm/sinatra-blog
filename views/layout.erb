@@ -47,6 +47,17 @@
             <li class="<%= current? %>"><a href="<%= link %>">Inicio</a></li>
             <li class="<%= current?('acerca.html') %>"><a href="<%= link 'acerca.html' %>">Acerca</a></li>
             <li class="<%= current?('contactar.html') %>"><a href="<%= link 'contactar.html' %>">Contactar</a></li>
+
+            <% if logged_in? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<%= link 'admin/posts' %>">Posts</a></li>
+                <li><a href="<%= link 'admin/tags' %>">Tags</a></li>
+                <li><a href="<%= link 'admin/messages' %>">Messages</a></li>
+              </ul>
+            </li>
+            <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a class="rss" href="<%= link 'feed' %>" target="_blank">RSS</a></li>
