@@ -256,6 +256,30 @@ get "/admin/messages/read/:id" do
   erb :"admin/messages/read"
 end
 
+# Tags
+get "/admin/tags" do
+ protected!
+ @title = "Tags"
+
+ @tags = Tag.order('name ASC')
+
+ erb :"admin/tags/index"
+end
+
+# Delete tags
+get "/admin/tags/delete/:id" do
+  protected!
+  @tag = Tag.find(params[:id])
+
+  if @tag.nil?
+    halt(404)
+  end
+
+  if @tag.destroy
+    redirect "/admin/tags", :notice => 'Tags deleted'
+  end
+end
+
 helpers do
   include Rack::Utils
 
