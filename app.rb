@@ -18,7 +18,7 @@ configure do
   set :password, ENV['ADMIN_PASS'] || 'admin'
 
   # How many posts per page
-  set :per_page, ENV['PER_PAGE'] || 1
+  set :per_page, ENV['PER_PAGE'].to_i || 1
 end
 
 # Feed
@@ -77,7 +77,7 @@ get "/" do
     @page = params[:page].to_i - 1
   end
 
-  count = Post.where.not({published_on: nil}).count.to_i
+  count = Post.where.not({published_on: nil}).count.to_f
   pages_n = (count / settings.per_page).ceil
 
   @page_n = @page + 1
@@ -111,7 +111,7 @@ get "/tag/:slug/" do
     @page = params[:page].to_i - 1
   end
 
-  count = @tag.posts.where.not({published_on: nil}).count.to_i
+  count = @tag.posts.where.not({published_on: nil}).count.to_f
   pages_n = (count / settings.per_page).ceil
 
   @page_n = @page + 1
