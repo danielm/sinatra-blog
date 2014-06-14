@@ -77,7 +77,7 @@ get "/" do
     @page = params[:page].to_i - 1
   end
 
-  count = Post.where.not({published_on: nil}).count.to_f
+  count = Post.where.not({published_on: nil}).count.to_i
   pages_n = (count / settings.per_page).ceil
 
   @page_n = @page + 1
@@ -111,7 +111,7 @@ get "/tag/:slug/" do
     @page = params[:page].to_i - 1
   end
 
-  count = @tag.posts.where.not({published_on: nil}).count.to_f
+  count = @tag.posts.where.not({published_on: nil}).count.to_i
   pages_n = (count / settings.per_page).ceil
 
   @page_n = @page + 1
