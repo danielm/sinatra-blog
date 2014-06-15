@@ -18,7 +18,7 @@ configure do
   set :password, ENV['ADMIN_PASS'] || 'admin'
 
   # How many posts per page
-  set :per_page, ENV['PER_PAGE'].to_i || 1
+  set :per_page, ENV['PER_PAGE'].nil? ? 1 : ENV['PER_PAGE'].to_i
 end
 
 # Feed
