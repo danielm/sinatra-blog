@@ -24,7 +24,7 @@
  <div class="form-group">
    <label for="post_body">Body:</label>
    <br>
-   <textarea rows="5" id="post_body" name="post[body]" class="form-control" rows="10"><%= @post.body %></textarea>
+   <textarea rows="5" id="post_body" name="post[body]" class="form-control tinymce" rows="10"><%= @post.body %></textarea>
  </div>
  
  <div class="form-group ">
@@ -34,3 +34,10 @@
  </div>
  
  <button type="submit" class="btn btn-success">Submit</button>
+
+<% js_custom_add_file('//tinymce.cachefly.net/4.1/tinymce.min.js')  %> 
+<% js_custom_add_file('//tinymce.cachefly.net/4.1/jquery.tinymce.min.js')  %> 
+<% js_custom_add_file(link('js/app.editor.js'))  %> 
+
+
+

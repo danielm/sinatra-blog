@@ -8,6 +8,7 @@ gem "activerecord"
 gem "sinatra-activerecord"
 gem "sinatra-flash"
 gem "sinatra-redirect-with-flash"
+gem "sinatra-js"
 gem "rubysl-securerandom"
 
 group :development do
