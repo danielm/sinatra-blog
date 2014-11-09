@@ -1,0 +1,34 @@
+<h1>Administracion <small>Pages</small></h1>
+
+<div class="admin-bar">
+	<a class="btn btn-default btn-success" href="/admin/pages/create" role="button">+New Page</a>
+</div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
+<% @pages.each do |page| %>
+		<tr>
+			<td><%= page.id %></td>
+			<td><%= page.title %></td>
+			<td class="list-actions">
+				<a role="button" title="Edit" class="btn btn-default" href="/admin/pages/edit/<%= page.id %>"><span class="glyphicon glyphicon-list"></span></a>
+
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/pages/delete/<%= page.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+			</td>
+		</tr>
+<% end %>
+<% if @pages.length == 0 %>
+		<tr>
+			<td colspan="3">No pages were found</td>
+		</tr>
+<% end %>
+	</tbody>
+</table>

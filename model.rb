@@ -69,3 +69,20 @@ class Message < ActiveRecord::Base
   validates :body, presence: true
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, :message => "is not a valid e-mail address"
 end
+
+# Pages Model
+class Page < ActiveRecord::Base
+  validates :title, presence: true, length: { minimum: 5, maximum: 255  }
+  validates :slug, uniqueness: { case_sensitive: false }
+  validates :body, presence: true
+
+  before_save :create_slug
+
+  def url
+    "p/#{self.slug}.html"
+  end
+
+  def create_slug
+    self.slug = self.title.parameterize
+  end
+end

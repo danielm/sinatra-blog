@@ -1,0 +1,10 @@
+<h1>Administracion <small>Edit Page #<%= @page.id %></small></h1>
+
+<div class="admin-bar">
+  <a class="btn btn-default btn-default" href="/admin/pages" role="button">&laquo; Back to list</a>
+</div>
+
+<form action="/admin/pages/edit/<%= @page.id %>" method="post" role="form">
+  <%= erb :'admin/pages/form', :layout => false %>
+</form>
+	

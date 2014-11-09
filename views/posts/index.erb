@@ -1,7 +1,7 @@
 <% @posts.each do |post| %>
 <div class="duy-post">
   <h2 class="duy-title"><a href="<%=link post.url %>"><%= post.title.titleize %></a></h2>
-  <p class="duy-info"><%= post.published_on %> by <a href="/acerca.html">Daniel</a></p>
+  <p class="duy-info"><%= post.published_on %> by <a href="/p/acerca.html">Daniel</a></p>
 
   <%= post.body %>
 </div>

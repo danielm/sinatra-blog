@@ -40,9 +40,15 @@ get "/admin" do
 end
 
 # Pages
-get "/acerca.html" do
-  @title = "Acerca"
-  erb :"pages/acerca"
+get "/p/:slug.html" do
+  @page = Page.find_by(slug: params[:slug])
+
+  if @page.nil?
+    halt(404)
+  end
+
+  @title = @page.title
+  erb :"pages/page"
 end
 
 # Contact Form
@@ -225,6 +231,80 @@ get "/admin/posts/delete/:id" do
   end
 end
 
+# Pages admin
+get "/admin/pages" do
+ protected!
+ @title = "Pages"
+
+ @pages = Page.order("title DESC")
+
+ erb :"admin/pages/index"
+end
+
+# Create Page
+get "/admin/pages/create" do
+ protected!
+ @title = "Create page"
+
+ @page = Page.new
+
+ erb :"admin/pages/create"
+end
+
+post "/admin/pages/create" do
+ protected!
+ @title = "Create page"
+
+ @page = Page.new(params[:page])
+ if @page.save
+   redirect "/admin/pages", :notice => 'New page created'
+ end
+
+ erb :"admin/pages/create"
+end
+
+# Edit Page
+get "/admin/pages/edit/:id" do
+  protected!
+  @title = "Edit page"
+
+  @page = Page.find(params[:id])
+
+  erb :"admin/pages/edit"
+end
+
+post "/admin/pages/edit/:id" do
+  protected!
+  @title = "Edit page"
+
+  @page = Page.find(params[:id])
+  
+  if @page.nil?
+    halt(404)
+  end
+
+  @page.update(params[:page])
+  if @page.save
+    redirect "/admin/pages", :notice => 'Page changes saved'
+  end
+
+  erb :"admin/pages/edit"
+end
+
+# Delete page
+get "/admin/pages/delete/:id" do
+  protected!
+  @page = Page.find(params[:id])
+
+  if @page.nil?
+    halt(404)
+  end
+
+  if @page.destroy
+    redirect "/admin/pages", :notice => 'Pages deleted'
+  end
+end
+
 # Contact Messages
 get "/admin/messages" do
  protected!
@@ -294,6 +374,10 @@ helpers do
   include Rack::Utils
 
   alias_method :h, :escape_html
+
+  def menu
+    Page.all.order('title ASC')
+  end
 
   def title
     if @title
