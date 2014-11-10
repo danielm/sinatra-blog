@@ -51,6 +51,18 @@ get "/p/:slug.html" do
   erb :"pages/page"
 end
 
+# Wiki
+get "/wiki/:name/?:section?" do
+  if params[:name].nil?
+    halt(404)
+  end
+  
+  tpl = params[:section] || "index"
+
+  @title = params[:name].titleize
+  erb :"wiki/#{params[:name]}/#{tpl}"
+end
+
 # Contact Form
 get "/contactar.html" do
   @title = "Contactar"
