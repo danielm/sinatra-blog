@@ -60,6 +60,7 @@ get "/wiki/:name/?:section?" do
   tpl = params[:section] || "index"
 
   @title = params[:name].titleize
+  @hide_sidebar = true
   erb :"wiki/#{params[:name]}/#{tpl}"
 end
 
@@ -436,6 +437,10 @@ helpers do
 
   def tags
     Tag.all.order('name ASC')
+  end
+  
+  def sidebar?
+    @hide_sidebar.nil? || @hide_sidebar == false
   end
 end
 

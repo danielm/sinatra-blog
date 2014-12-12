@@ -89,10 +89,11 @@
       <% end %>
 
       <div class="row">
-        <div class="col-sm-8 duy-main">
+        <div class="<% if sidebar? %>col-sm-8<% else %>col-sm-12<% end %> duy-main">
           <%= yield %>
         </div>
 
+        <% if sidebar? %>
         <div class="col-sm-3 col-sm-offset-1">
           <div class="sidebar-module sidebar-module-inset">
             <h4>Acerca</h4>
@@ -112,6 +113,8 @@
             </ol>
           </div>
         </div>
+        <% end %>
+        
       </div>
     </div>
 
