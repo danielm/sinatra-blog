@@ -5,6 +5,7 @@ require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'sinatra/redirect_with_flash'
 require 'sinatra/js'
+require 'sinatra/r18n'
 
 require 'securerandom'
 require './environments'
@@ -65,29 +66,29 @@ get "/wiki/:name/?:section?" do
 end
 
 # Contact Form
-get "/contactar.html" do
-  @title = "Contactar"
+get "/contact" do
+  @title = t.contact.title
   @message = Message.new
   
-  erb :"pages/contactar"
+  erb :"pages/contact"
 end
 
-post '/contactar.html' do
-  @title = "Contactar"
+post '/contact' do
+  @title = t.contact.title
   @message = Message.new(params[:message])
 
   g2g = valid_csrf? params[:token]
   
   if g2g && @message.save
-    redirect "/", :notice => 'Thanks for your message. We\'ll be in touch soon.'
+    redirect "/", :notice => t.contact.sent
    end
 
-  erb :"pages/contactar"
+  erb :"pages/contact"
 end
 
 # Homepage (paginated)
 get "/" do
-  @title = "Inicio"
+  @title = t.home.title
   
   if params[:page].nil?
     @page = 0
@@ -114,14 +115,14 @@ get "/" do
 end
 
 # Tag (paginated)
-get "/tag/:slug/" do
-  @title = "Inicio"
-  
+get "/tag/:slug/" do  
   @tag = Tag.find_by(slug: params[:slug])
 
   if @tag.nil?
     halt(404)
   end
+  
+  @title = t.home.tag(@tag.name)
 
   if params[:page].nil?
     @page = 0
@@ -161,19 +162,19 @@ end
 
 # Error messages
 get "/error/not_found.html" do
-  @title = "Not Found"
+  @title = t.error.not_found
   erb :"pages/not_found"
 end
 
 get "/error/application.html" do
-  @title = "Application Error"
+  @title = t.error.application_error
   erb :"pages/application"
 end
 
 # Administration
 get "/admin/posts" do
  protected!
- @title = "Panel"
+ @title = t.panel.post.title
  @hide_sidebar = true
 
  @posts = Post.order("published_on DESC")
@@ -184,7 +185,7 @@ end
 # Create Post
 get "/admin/posts/create" do
  protected!
- @title = "Create post"
+ @title = t.panel.post.create
  @hide_sidebar = true
 
  @post = Post.new
@@ -194,12 +195,12 @@ end
 
 post "/admin/posts/create" do
  protected!
- @title = "Create post"
+ @title = t.panel.post.create
  @hide_sidebar = true
 
  @post = Post.new(params[:post])
  if @post.save
-   redirect "/admin/posts", :notice => 'New post created'
+   redirect "/admin/posts", :notice => t.panel.post.created
  end
 
  erb :"admin/posts/create"
@@ -208,7 +209,7 @@ end
 # Edit Post
 get "/admin/posts/edit/:id" do
   protected!
-  @title = "Edit post"
+  @title = t.panel.post.edit
   @hide_sidebar = true
 
   @post = Post.find(params[:id])
@@ -218,7 +219,7 @@ end
 
 post "/admin/posts/edit/:id" do
   protected!
-  @title = "Edit post"
+  @title = t.panel.post.edit
   @hide_sidebar = true
 
   @post = Post.find(params[:id])
@@ -229,7 +230,7 @@ post "/admin/posts/edit/:id" do
 
   @post.update(params[:post])
   if @post.save
-    redirect "/admin/posts", :notice => 'Post changes saved'
+    redirect "/admin/posts", :notice => t.panel.post.edited(@post.id)
   end
 
   erb :"admin/posts/edit"
@@ -245,14 +246,14 @@ get "/admin/posts/delete/:id" do
   end
 
   if @post.destroy
-    redirect "/admin/posts", :notice => 'Post deleted'
+    redirect "/admin/posts", :notice => t.panel.post.deleted(@post.id)
   end
 end
 
 # Pages admin
 get "/admin/pages" do
  protected!
- @title = "Pages"
+ @title = t.panel.page.title
  @hide_sidebar = true
 
  @pages = Page.order("title DESC")
@@ -263,7 +264,7 @@ end
 # Create Page
 get "/admin/pages/create" do
  protected!
- @title = "Create page"
+ @title = t.panel.page.create
  @hide_sidebar = true
 
  @page = Page.new
@@ -273,12 +274,12 @@ end
 
 post "/admin/pages/create" do
  protected!
- @title = "Create page"
+ @title = t.panel.page.create
  @hide_sidebar = true
 
  @page = Page.new(params[:page])
  if @page.save
-   redirect "/admin/pages", :notice => 'New page created'
+   redirect "/admin/pages", :notice => t.panel.page.created
  end
 
  erb :"admin/pages/create"
@@ -287,7 +288,7 @@ end
 # Edit Page
 get "/admin/pages/edit/:id" do
   protected!
-  @title = "Edit page"
+  @title = t.panel.page.edit
   @hide_sidebar = true
 
   @page = Page.find(params[:id])
@@ -297,7 +298,7 @@ end
 
 post "/admin/pages/edit/:id" do
   protected!
-  @title = "Edit page"
+  @title = t.panel.page.edit
   @hide_sidebar = true
 
   @page = Page.find(params[:id])
@@ -308,7 +309,7 @@ post "/admin/pages/edit/:id" do
 
   @page.update(params[:page])
   if @page.save
-    redirect "/admin/pages", :notice => 'Page changes saved'
+    redirect "/admin/pages", :notice => t.panel.page.edited(@page.id)
   end
 
   erb :"admin/pages/edit"
@@ -324,14 +325,14 @@ get "/admin/pages/delete/:id" do
   end
 
   if @page.destroy
-    redirect "/admin/pages", :notice => 'Pages deleted'
+    redirect "/admin/pages", :notice => t.panel.page.deleted(@page.id)
   end
 end
 
 # Contact Messages
 get "/admin/messages" do
  protected!
- @title = "Contact Messsages"
+ @title = t.panel.messages.title
  @hide_sidebar = true
 
  @messages = Message.order('read ASC').order("created_at DESC")
@@ -349,14 +350,14 @@ get "/admin/messages/delete/:id" do
   end
 
   if @message.destroy
-    redirect "/admin/messages", :notice => 'Message deleted'
+    redirect "/admin/messages", :notice => t.panel.messages.deleted(@message.id)
   end
 end
 
 # Read message
 get "/admin/messages/read/:id" do
   protected!
-  @title = "Read message"
+  @title = t.panel.messages.read(@message.id)
   @hide_sidebar = true
 
   @message = Message.find(params[:id])
@@ -374,7 +375,7 @@ end
 # Tags
 get "/admin/tags" do
  protected!
- @title = "Tags"
+ @title = t.panel.tags.title
  @hide_sidebar = true
 
  @tags = Tag.order('name ASC')
@@ -392,7 +393,7 @@ get "/admin/tags/delete/:id" do
   end
 
   if @tag.destroy
-    redirect "/admin/tags", :notice => 'Tags deleted'
+    redirect "/admin/tags", :notice => t.panel.tags.deleted(@tag.id)
   end
 end
 

@@ -1,0 +1,35 @@
+contact:
+  title: "Contact"
+  sent: "Thanks for your message. We'll be in touch soon."
+
+home:
+  title: "Home"
+  tag: "Tag: #%1"
+
+error:
+  not_found: "Not Found"
+  application_error: "Application Error"
+
+panel:
+  title: "Panel"
+  post:
+    title: "Posts"
+    create: "Create Post"
+    created: "New post created"
+    edit: "Edit Post"
+    edited: "Post #%1 changes saved"
+    deleted: "Post #%1 deleted"
+  page:
+    title: "Static Pages"
+    create: "Create Page"
+    created: "New page created"
+    edit: "Edit Page"
+    edited: "Page #%1 changes saved"
+    deleted: "Page #%1 deleted"
+  messages:
+    title: "Contact Messages"
+    deleted: "Message #%1 deleted"
+    read: "Message #%1"
+  tags:
+    title: "Tags"
+    deleted: "Tag #%1 deleted"

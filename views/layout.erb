@@ -57,7 +57,7 @@
             <% menu.each do |item| %>
             <li class="<%= current?(item.url) %>"><a href="<%= link item.url %>"><%= item.title.titleize %></a></li>
             <% end %>
-            <li class="<%= current?('contactar.html') %>"><a href="<%= link 'contactar.html' %>">Contactar</a></li>
+            <li class="<%= current?('contact') %>"><a href="<%= link 'contact' %>">Contactar</a></li>
 
             <% if logged_in? %>
             <li class="dropdown">
