@@ -29,7 +29,7 @@ class Post < ActiveRecord::Base
   validates :slug, uniqueness: { case_sensitive: false }
   validates :body, presence: true
 
-  before_save :create_slug
+  before_validation :create_slug
   after_save :assign_tags
 
   attr_writer :tag_names
@@ -76,7 +76,7 @@ class Page < ActiveRecord::Base
   validates :slug, uniqueness: { case_sensitive: false }
   validates :body, presence: true
 
-  before_save :create_slug
+  before_validation :create_slug
 
   def url
     "p/#{self.slug}.html"
