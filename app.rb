@@ -174,6 +174,7 @@ end
 get "/admin/posts" do
  protected!
  @title = "Panel"
+ @hide_sidebar = true
 
  @posts = Post.order("published_on DESC")
 
@@ -184,6 +185,7 @@ end
 get "/admin/posts/create" do
  protected!
  @title = "Create post"
+ @hide_sidebar = true
 
  @post = Post.new
 
@@ -193,6 +195,7 @@ end
 post "/admin/posts/create" do
  protected!
  @title = "Create post"
+ @hide_sidebar = true
 
  @post = Post.new(params[:post])
  if @post.save
@@ -206,6 +209,7 @@ end
 get "/admin/posts/edit/:id" do
   protected!
   @title = "Edit post"
+  @hide_sidebar = true
 
   @post = Post.find(params[:id])
 
@@ -215,6 +219,7 @@ end
 post "/admin/posts/edit/:id" do
   protected!
   @title = "Edit post"
+  @hide_sidebar = true
 
   @post = Post.find(params[:id])
   
@@ -248,6 +253,7 @@ end
 get "/admin/pages" do
  protected!
  @title = "Pages"
+ @hide_sidebar = true
 
  @pages = Page.order("title DESC")
 
@@ -258,6 +264,7 @@ end
 get "/admin/pages/create" do
  protected!
  @title = "Create page"
+ @hide_sidebar = true
 
  @page = Page.new
 
@@ -267,6 +274,7 @@ end
 post "/admin/pages/create" do
  protected!
  @title = "Create page"
+ @hide_sidebar = true
 
  @page = Page.new(params[:page])
  if @page.save
@@ -280,6 +288,7 @@ end
 get "/admin/pages/edit/:id" do
   protected!
   @title = "Edit page"
+  @hide_sidebar = true
 
   @page = Page.find(params[:id])
 
@@ -289,6 +298,7 @@ end
 post "/admin/pages/edit/:id" do
   protected!
   @title = "Edit page"
+  @hide_sidebar = true
 
   @page = Page.find(params[:id])
   
@@ -322,6 +332,7 @@ end
 get "/admin/messages" do
  protected!
  @title = "Contact Messsages"
+ @hide_sidebar = true
 
  @messages = Message.order('read ASC').order("created_at DESC")
 
@@ -346,6 +357,7 @@ end
 get "/admin/messages/read/:id" do
   protected!
   @title = "Read message"
+  @hide_sidebar = true
 
   @message = Message.find(params[:id])
 
@@ -363,6 +375,7 @@ end
 get "/admin/tags" do
  protected!
  @title = "Tags"
+ @hide_sidebar = true
 
  @tags = Tag.order('name ASC')
 
