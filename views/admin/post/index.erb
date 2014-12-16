@@ -1,7 +1,7 @@
 <h1>Administracion <small>Posts</small></h1>
 
 <div class="admin-bar">
-	<a class="btn btn-default btn-success" href="/admin/posts/create" role="button">+New Post</a>
+	<a class="btn btn-default btn-success" href="/admin/post/create" role="button">+New Post</a>
 </div>
 
 <table class="table table-striped">
@@ -27,9 +27,9 @@
 				<% end %>
 			</td>
 			<td class="list-actions">
-				<a role="button" title="Edit" class="btn btn-default" href="/admin/posts/edit/<%= post.id %>"><span class="glyphicon glyphicon-list"></span></a>
+				<a role="button" title="Edit" class="btn btn-default" href="/admin/post/edit/<%= post.id %>"><span class="glyphicon glyphicon-list"></span></a>
 
-				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/posts/delete/<%= post.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/post/delete/<%= post.id %>"><span class="glyphicon glyphicon-trash"></span></a>
 			</td>
 		</tr>
 <% end %>

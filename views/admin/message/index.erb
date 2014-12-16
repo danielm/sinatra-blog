@@ -15,14 +15,14 @@
 		<tr>
 			<td><%= msg.id %></td>
 			<td>
-				<a href="/admin/messages/read/<%= msg.id %>"><%= msg.name %></a>
+				<a href="/admin/message/read/<%= msg.id %>"><%= msg.name %></a>
 				<% if !msg.read %><em>NEW</em><% end %>
 			</td>
 			<td>
 				<%= msg.created_at %>
 			</td>
 			<td class="list-actions">
-				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/messages/delete/<%= msg.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/message/delete/<%= msg.id %>"><span class="glyphicon glyphicon-trash"></span></a>
 			</td>
 		</tr>
 <% end %>

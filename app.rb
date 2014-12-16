@@ -31,15 +31,6 @@ get "/feed" do
   erb :"feed", :layout => false 
 end
 
-# Admin
-get "/admin" do
-  protected!
-
-  env['rack.session']['logged_in'] = true;
-
-  redirect '/admin/posts'
-end
-
 # Pages
 get "/p/:slug.html" do
   @page = Page.find_by(slug: params[:slug])
@@ -171,56 +162,59 @@ get "/error/application.html" do
   erb :"pages/application"
 end
 
-# Administration
-get "/admin/posts" do
- protected!
+# Filters
+before '/admin/*' do
+  protected!
+  
+  env['rack.session']['logged_in'] = true;
+  
+  @hide_sidebar = true
+end
+
+# Administration Dashboard
+get "/admin" do
+  redirect '/admin/post'
+end
+
+get "/admin/post" do
  @title = t.panel.post.title
- @hide_sidebar = true
 
  @posts = Post.order("published_on DESC")
 
- erb :"admin/posts/index"
+ erb :"admin/post/index"
 end
 
 # Create Post
-get "/admin/posts/create" do
- protected!
+get "/admin/post/create" do
  @title = t.panel.post.create
- @hide_sidebar = true
 
  @post = Post.new
 
- erb :"admin/posts/create"
+ erb :"admin/post/create"
 end
 
-post "/admin/posts/create" do
- protected!
+post "/admin/post/create" do
  @title = t.panel.post.create
- @hide_sidebar = true
 
  @post = Post.new(params[:post])
  if @post.save
-   redirect "/admin/posts", :notice => t.panel.post.created
+   redirect "/admin/post", :notice => t.panel.post.created
  end
 
  erb :"admin/posts/create"
 end
 
 # Edit Post
-get "/admin/posts/edit/:id" do
-  protected!
+get "/admin/post/edit/:id" do
   @title = t.panel.post.edit
-  @hide_sidebar = true
 
   @post = Post.find(params[:id])
 
-  erb :"admin/posts/edit"
+  erb :"admin/post/edit"
 end
 
-post "/admin/posts/edit/:id" do
-  protected!
+post "/admin/post/edit/:id" do
   @title = t.panel.post.edit
-  @hide_sidebar = true
 
   @post = Post.find(params[:id])
   
@@ -230,15 +224,14 @@ post "/admin/posts/edit/:id" do
 
   @post.update(params[:post])
   if @post.save
-    redirect "/admin/posts", :notice => t.panel.post.edited(@post.id)
+    redirect "/admin/post", :notice => t.panel.post.edited(@post.id)
   end
 
-  erb :"admin/posts/edit"
+  erb :"admin/post/edit"
 end
 
 # Delete post
-get "/admin/posts/delete/:id" do
-  protected!
+get "/admin/post/delete/:id" do
   @post = Post.find(params[:id])
 
   if @post.nil?
@@ -246,60 +239,50 @@ get "/admin/posts/delete/:id" do
   end
 
   if @post.destroy
-    redirect "/admin/posts", :notice => t.panel.post.deleted(@post.id)
+    redirect "/admin/post", :notice => t.panel.post.deleted(@post.id)
   end
 end
 
 # Pages admin
-get "/admin/pages" do
- protected!
+get "/admin/page" do
  @title = t.panel.page.title
- @hide_sidebar = true
 
  @pages = Page.order("title DESC")
 
- erb :"admin/pages/index"
+ erb :"admin/page/index"
 end
 
 # Create Page
-get "/admin/pages/create" do
- protected!
+get "/admin/page/create" do
  @title = t.panel.page.create
- @hide_sidebar = true
 
  @page = Page.new
 
- erb :"admin/pages/create"
+ erb :"admin/page/create"
 end
 
-post "/admin/pages/create" do
- protected!
+post "/admin/page/create" do
  @title = t.panel.page.create
- @hide_sidebar = true
 
  @page = Page.new(params[:page])
  if @page.save
-   redirect "/admin/pages", :notice => t.panel.page.created
+   redirect "/admin/page", :notice => t.panel.page.created
  end
 
- erb :"admin/pages/create"
+ erb :"admin/page/create"
 end
 
 # Edit Page
-get "/admin/pages/edit/:id" do
-  protected!
+get "/admin/page/edit/:id" do
   @title = t.panel.page.edit
-  @hide_sidebar = true
 
   @page = Page.find(params[:id])
 
-  erb :"admin/pages/edit"
+  erb :"admin/page/edit"
 end
 
-post "/admin/pages/edit/:id" do
-  protected!
+post "/admin/page/edit/:id" do
   @title = t.panel.page.edit
-  @hide_sidebar = true
 
   @page = Page.find(params[:id])
   
@@ -309,15 +292,14 @@ post "/admin/pages/edit/:id" do
 
   @page.update(params[:page])
   if @page.save
-    redirect "/admin/pages", :notice => t.panel.page.edited(@page.id)
+    redirect "/admin/page", :notice => t.panel.page.edited(@page.id)
   end
 
-  erb :"admin/pages/edit"
+  erb :"admin/page/edit"
 end
 
 # Delete page
-get "/admin/pages/delete/:id" do
-  protected!
+get "/admin/page/delete/:id" do
   @page = Page.find(params[:id])
 
   if @page.nil?
@@ -325,24 +307,21 @@ get "/admin/pages/delete/:id" do
   end
 
   if @page.destroy
-    redirect "/admin/pages", :notice => t.panel.page.deleted(@page.id)
+    redirect "/admin/page", :notice => t.panel.page.deleted(@page.id)
   end
 end
 
 # Contact Messages
-get "/admin/messages" do
- protected!
- @title = t.panel.messages.title
- @hide_sidebar = true
+get "/admin/message" do
+ @title = t.panel.message.title
 
  @messages = Message.order('read ASC').order("created_at DESC")
 
- erb :"admin/messages/index"
+ erb :"admin/message/index"
 end
 
 # Delete message
-get "/admin/messages/delete/:id" do
-  protected!
+get "/admin/message/delete/:id" do
   @message = Message.find(params[:id])
 
   if @message.nil?
@@ -350,17 +329,15 @@ get "/admin/messages/delete/:id" do
   end
 
   if @message.destroy
-    redirect "/admin/messages", :notice => t.panel.messages.deleted(@message.id)
+    redirect "/admin/message", :notice => t.panel.message.deleted(@message.id)
   end
 end
 
 # Read message
-get "/admin/messages/read/:id" do
-  protected!
-  @title = t.panel.messages.read(@message.id)
-  @hide_sidebar = true
-
+get "/admin/message/read/:id" do
   @message = Message.find(params[:id])
+  
+  @title = t.panel.message.read(@message.id)
 
   if @message.nil?
     halt(404)
@@ -369,23 +346,20 @@ get "/admin/messages/read/:id" do
   @message.read = true
   @message.save
 
-  erb :"admin/messages/read"
+  erb :"admin/message/read"
 end
 
 # Tags
-get "/admin/tags" do
- protected!
- @title = t.panel.tags.title
- @hide_sidebar = true
+get "/admin/tag" do
+ @title = t.panel.tag.title
 
  @tags = Tag.order('name ASC')
 
- erb :"admin/tags/index"
+ erb :"admin/tag/index"
 end
 
 # Delete tags
-get "/admin/tags/delete/:id" do
-  protected!
+get "/admin/tag/delete/:id" do
   @tag = Tag.find(params[:id])
 
   if @tag.nil?
@@ -393,7 +367,7 @@ get "/admin/tags/delete/:id" do
   end
 
   if @tag.destroy
-    redirect "/admin/tags", :notice => t.panel.tags.deleted(@tag.id)
+    redirect "/admin/tag", :notice => t.panel.tag.deleted(@tag.id)
   end
 end
 

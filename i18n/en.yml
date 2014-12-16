@@ -26,10 +26,10 @@ panel:
     edit: "Edit Page"
     edited: "Page #%1 changes saved"
     deleted: "Page #%1 deleted"
-  messages:
+  message:
     title: "Contact Messages"
     deleted: "Message #%1 deleted"
     read: "Message #%1"
-  tags:
+  tag:
     title: "Tags"
     deleted: "Tag #%1 deleted"

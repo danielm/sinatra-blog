@@ -1,7 +1,7 @@
 <h1>Administracion <small>Pages</small></h1>
 
 <div class="admin-bar">
-	<a class="btn btn-default btn-success" href="/admin/pages/create" role="button">+New Page</a>
+	<a class="btn btn-default btn-success" href="/admin/page/create" role="button">+New Page</a>
 </div>
 
 <table class="table table-striped">
@@ -19,9 +19,9 @@
 			<td><%= page.id %></td>
 			<td><%= page.title %></td>
 			<td class="list-actions">
-				<a role="button" title="Edit" class="btn btn-default" href="/admin/pages/edit/<%= page.id %>"><span class="glyphicon glyphicon-list"></span></a>
+				<a role="button" title="Edit" class="btn btn-default" href="/admin/page/edit/<%= page.id %>"><span class="glyphicon glyphicon-list"></span></a>
 
-				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/pages/delete/<%= page.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/page/delete/<%= page.id %>"><span class="glyphicon glyphicon-trash"></span></a>
 			</td>
 		</tr>
 <% end %>
