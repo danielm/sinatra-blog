@@ -15,7 +15,7 @@
 	</thead>
 
 	<tbody>
-<% @posts.each do |post| %>
+<% @entities.each do |post| %>
 		<tr>
 			<td><%= post.id %></td>
 			<td><%= post.title %></td>
@@ -33,7 +33,7 @@
 			</td>
 		</tr>
 <% end %>
-<% if @posts.length == 0 %>
+<% if @entities.length == 0 %>
 		<tr>
 			<td colspan="4">No posts were found</td>
 		</tr>

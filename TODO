@@ -1,5 +1,6 @@
 - Code cleanup
 - localization
+- Admin: make table headers sort by field
 - Tag cloud
 - Editor: * Suport page breaks
           * Maybe multiple pages too?

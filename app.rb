@@ -176,160 +176,94 @@ get "/admin" do
   redirect '/admin/post'
 end
 
-get "/admin/post" do
- @title = t.panel.post.title
+#
+# Simple CURD for our admin panel
+#
 
- @posts = Post.order("published_on DESC")
-
- erb :"admin/post/index"
+# List
+get "/admin/:module" do
+ model_name = params[:module].capitalize
+ model_class = Module.const_get(model_name)
+ 
+ @title = t.panel.crud.title(model_name)
+ @entities = model_class.order("id DESC")
+ 
+ erb :"admin/#{params[:module]}/index"
 end
 
-# Create Post
-get "/admin/post/create" do
- @title = t.panel.post.create
+# Create
+get "/admin/:module/create" do
+ model_name = params[:module].capitalize
+ model_class = Module.const_get(model_name)
+ 
+ @title = t.panel.crud.create(model_name)
 
- @post = Post.new
+ @entity = model_class.new
 
- erb :"admin/post/create"
+ erb :"admin/#{params[:module]}/create"
 end
 
-post "/admin/post/create" do
- @title = t.panel.post.create
-
- @post = Post.new(params[:post])
- if @post.save
-   redirect "/admin/post", :notice => t.panel.post.created
+post "/admin/:module/create" do
+ model_name = params[:module].capitalize
+ model_class = Module.const_get(model_name)
+ 
+ @title = t.panel.crud.create(model_name)
+ @entity = model_class.new(params[:entity])
+ 
+ if @entity.save
+   redirect "/admin/#{params[:module]}", :notice => t.panel.crud.created(model_name)
  end
 
- erb :"admin/posts/create"
+ erb :"admin/#{params[:module]}/create"
 end
 
-# Edit Post
-get "/admin/post/edit/:id" do
-  @title = t.panel.post.edit
-
-  @post = Post.find(params[:id])
-
-  erb :"admin/post/edit"
-end
-
-post "/admin/post/edit/:id" do
-  @title = t.panel.post.edit
-
-  @post = Post.find(params[:id])
+# Edit
+get "/admin/:module/edit/:id" do
+  model_name = params[:module].capitalize
+  model_class = Module.const_get(model_name)
   
-  if @post.nil?
-    halt(404)
-  end
-
-  @post.update(params[:post])
-  if @post.save
-    redirect "/admin/post", :notice => t.panel.post.edited(@post.id)
-  end
-
-  erb :"admin/post/edit"
-end
-
-# Delete post
-get "/admin/post/delete/:id" do
-  @post = Post.find(params[:id])
-
-  if @post.nil?
-    halt(404)
-  end
-
-  if @post.destroy
-    redirect "/admin/post", :notice => t.panel.post.deleted(@post.id)
-  end
-end
-
-# Pages admin
-get "/admin/page" do
- @title = t.panel.page.title
-
- @pages = Page.order("title DESC")
-
- erb :"admin/page/index"
-end
-
-# Create Page
-get "/admin/page/create" do
- @title = t.panel.page.create
-
- @page = Page.new
-
- erb :"admin/page/create"
-end
-
-post "/admin/page/create" do
- @title = t.panel.page.create
-
- @page = Page.new(params[:page])
- if @page.save
-   redirect "/admin/page", :notice => t.panel.page.created
- end
-
- erb :"admin/page/create"
-end
-
-# Edit Page
-get "/admin/page/edit/:id" do
-  @title = t.panel.page.edit
-
-  @page = Page.find(params[:id])
-
-  erb :"admin/page/edit"
-end
-
-post "/admin/page/edit/:id" do
-  @title = t.panel.page.edit
-
-  @page = Page.find(params[:id])
+  @title = t.panel.crud.edit(model_name)
+  @entity = model_class.find(params[:id])
   
-  if @page.nil?
+  if @entity.nil?
     halt(404)
   end
 
-  @page.update(params[:page])
-  if @page.save
-    redirect "/admin/page", :notice => t.panel.page.edited(@page.id)
-  end
-
-  erb :"admin/page/edit"
+  erb :"admin/#{params[:module]}/edit"
 end
 
-# Delete page
-get "/admin/page/delete/:id" do
-  @page = Page.find(params[:id])
-
-  if @page.nil?
+post "/admin/:module/edit/:id" do
+  model_name = params[:module].capitalize
+  model_class = Module.const_get(model_name)
+  
+  @title = t.panel.crud.edit(model_name)
+  @entity = model_class.find(params[:id])
+  
+  if @entity.nil?
     halt(404)
   end
 
-  if @page.destroy
-    redirect "/admin/page", :notice => t.panel.page.deleted(@page.id)
+  @entity.update(params[:entity])
+  if @entity.save
+    redirect "/admin/#{params[:module]}", :notice => t.panel.crud.edited(model_class, params[:id])
   end
+
+  erb :"admin/#{params[:module]}/edit"
 end
 
-# Contact Messages
-get "/admin/message" do
- @title = t.panel.message.title
+# Delete
+get "/admin/:module/delete/:id" do
+  model_name = params[:module].capitalize
+  model_class = Module.const_get(model_name)
+  
+  @entity = model_class.find(params[:id])
 
- @messages = Message.order('read ASC').order("created_at DESC")
-
- erb :"admin/message/index"
-end
-
-# Delete message
-get "/admin/message/delete/:id" do
-  @message = Message.find(params[:id])
-
-  if @message.nil?
+  if @entity.nil?
     halt(404)
   end
 
-  if @message.destroy
-    redirect "/admin/message", :notice => t.panel.message.deleted(@message.id)
+  if @entity.destroy
+    redirect "/admin/#{params[:module]}", :notice => t.panel.crud.deleted(model_class, params[:id])
   end
 end
 
@@ -347,28 +281,6 @@ get "/admin/message/read/:id" do
   @message.save
 
   erb :"admin/message/read"
-end
-
-# Tags
-get "/admin/tag" do
- @title = t.panel.tag.title
-
- @tags = Tag.order('name ASC')
-
- erb :"admin/tag/index"
-end
-
-# Delete tags
-get "/admin/tag/delete/:id" do
-  @tag = Tag.find(params[:id])
-
-  if @tag.nil?
-    halt(404)
-  end
-
-  if @tag.destroy
-    redirect "/admin/tag", :notice => t.panel.tag.deleted(@tag.id)
-  end
 end
 
 helpers do

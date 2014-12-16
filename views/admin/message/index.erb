@@ -11,7 +11,7 @@
 	</thead>
 
 	<tbody>
-<% @messages.each do |msg| %>
+<% @entities.each do |msg| %>
 		<tr>
 			<td><%= msg.id %></td>
 			<td>
@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 <% end %>
-<% if @messages.length == 0 %>
+<% if @entities.length == 0 %>
 		<tr>
 			<td colspan="4">No messages were found</td>
 		</tr>

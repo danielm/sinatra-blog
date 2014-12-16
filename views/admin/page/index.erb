@@ -14,7 +14,7 @@
 	</thead>
 
 	<tbody>
-<% @pages.each do |page| %>
+<% @entities.each do |page| %>
 		<tr>
 			<td><%= page.id %></td>
 			<td><%= page.title %></td>
@@ -25,7 +25,7 @@
 			</td>
 		</tr>
 <% end %>
-<% if @pages.length == 0 %>
+<% if @entities.length == 0 %>
 		<tr>
 			<td colspan="3">No pages were found</td>
 		</tr>

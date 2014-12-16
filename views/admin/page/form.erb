@@ -1,8 +1,8 @@
- <% if @page.errors.count > 0 %>
+ <% if @entity.errors.count > 0 %>
     <div class="alert alert-danger alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <ul>
-        <% @page.errors.full_messages.each do |e| %>
+        <% @entity.errors.full_messages.each do |e| %>
            <li><%= e %></li>
         <% end %>
       </ul>
@@ -12,13 +12,13 @@
  <div class="form-group">
    <label for="page_title">Title:</label>
    <br>
-   <input id="page_title" class="form-control" name="page[title]" type="text" value="<%= @page.title %>" />  	
+   <input id="page_title" class="form-control" name="entity[title]" type="text" value="<%= @entity.title %>" />  	
  </div>
 
  <div class="form-group">
    <label for="page_body">Content:</label>
    <br>
-   <textarea rows="5" id="page_body" name="page[body]" class="form-control tinymce" rows="10"><%= @page.body %></textarea>
+   <textarea rows="5" id="page_body" name="entity[body]" class="form-control tinymce" rows="10"><%= @entity.body %></textarea>
  </div>
  
  <button type="submit" class="btn btn-success">Submit</button>

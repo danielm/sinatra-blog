@@ -10,7 +10,7 @@
 	</thead>
 
 	<tbody>
-<% @tags.each do |tag| %>
+<% @entities.each do |tag| %>
 		<tr>
 			<td><%= tag.id %></td>
 			<td><%= tag.name %></td>
@@ -19,7 +19,7 @@
 			</td>
 		</tr>
 <% end %>
-<% if @tags.length == 0 %>
+<% if @entities.length == 0 %>
 		<tr>
 			<td colspan="2">No tags were found</td>
 		</tr>

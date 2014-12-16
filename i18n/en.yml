@@ -12,24 +12,12 @@ error:
 
 panel:
   title: "Panel"
-  post:
-    title: "Posts"
-    create: "Create Post"
-    created: "New post created"
-    edit: "Edit Post"
-    edited: "Post #%1 changes saved"
-    deleted: "Post #%1 deleted"
-  page:
-    title: "Static Pages"
-    create: "Create Page"
-    created: "New page created"
-    edit: "Edit Page"
-    edited: "Page #%1 changes saved"
-    deleted: "Page #%1 deleted"
+  crud:
+    title: "%1s list"
+    create: "Create %1"
+    created: "New %1 created"
+    edit: "Edit %1"
+    edited: "%1 #%2 changes saved"
+    deleted: "%1 #%2 deleted"
   message:
-    title: "Contact Messages"
-    deleted: "Message #%1 deleted"
     read: "Message #%1"
-  tag:
-    title: "Tags"
-    deleted: "Tag #%1 deleted"
