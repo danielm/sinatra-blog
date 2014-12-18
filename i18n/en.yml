@@ -21,3 +21,13 @@ panel:
     deleted: "%1 #%2 deleted"
   message:
     read: "Message #%1"
+  menu:
+    posts: "Posts"
+    tags: "Tags"
+    pages: "Pages"
+    messages: "Messages"
+
+modules:
+  about: "About"
+  tags: "Tags"
+

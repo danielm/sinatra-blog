@@ -2,9 +2,9 @@
 <rss version="2.0">
 
 <channel>
-  <title>Daniel.uy Blog</title>
+  <title><%= settings.blog_name %></title>
   <link><%=link %></link>
-  <description>Mi blog en español!</description>
+  <description><%= settings.blog_description %></description>
 <% @posts.each do |post| %>
   <item>
     <title><%= post.title %></title>

@@ -21,6 +21,10 @@ configure do
 
   # How many posts per page
   set :per_page, ENV['PER_PAGE'].nil? ? 1 : ENV['PER_PAGE'].to_i
+  
+  # Blog settings
+  set :blog_name, ENV['BLOG_NAME'] || 'Sinatra Blog CMS'
+  set :blog_description, ENV['BLOG_DESCRIPTION'] || 'Simple Blog CMS using SinatraRB'
 end
 
 # Feed
