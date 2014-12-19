@@ -25,6 +25,7 @@ configure do
   # Blog settings
   set :blog_name, ENV['BLOG_NAME'] || 'Sinatra Blog CMS'
   set :blog_description, ENV['BLOG_DESCRIPTION'] || 'Simple Blog CMS using SinatraRB'
+  set :disqus_id, ENV['DISQUS_ID'] || false
 end
 
 # Feed

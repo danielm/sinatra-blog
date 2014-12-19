@@ -1,9 +1,7 @@
   <div class="duy-page-title">
-	<h1>Contactar</h1>
+	<h1><%= t.contact.title %></h1>
 	<hr />
   </div>
-
-  <p>Para contactarse porfavor complete el siguiente formulario; ó diríjase la página de <a href="/acerca.html">Acerca</a> por otras formas de contacto.</p>
 
   <form action="<%= link 'contact' %>" method="post" role="form" class="contact-form">
     <input type="hidden" name="token" value="<%= csrf_token %>" />
@@ -19,19 +17,19 @@
     <% end %>
 
     <div class="form-group">
-      <label class="control-label">Tu Nombre:</label>
+      <label class="control-label"><%= t.contact.name %>:</label>
       <input type="text" class="form-control" name="message[name]" value="<%= @message.name %>">
     </div>
 
     <div class="form-group">
-      <label class="control-label">Tu e-mail:</label>
+      <label class="control-label"><%= t.contact.email %></label>
       <input type="text" class="form-control" name="message[email]" value="<%= @message.email %>">
     </div>
 
     <div class="form-group">
-      <label class="control-label">Mensaje:</label>
+      <label class="control-label"><%= t.contact.message %></label>
       <textarea class="form-control" rows="5" name="message[body]" rows="16" cols="28"><%= @message.body %></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Enviar mensaje</button>
+    <button type="submit" class="btn btn-primary btn-lg"><%= t.contact.label %></button>
   </form>

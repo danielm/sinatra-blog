@@ -1,6 +1,10 @@
 contact:
   title: "Contact"
   sent: "Thanks for your message. We'll be in touch soon."
+  name: "Name"
+  email: "E-mail"
+  message: "Message"
+  label: "Send"
 
 home:
   title: "Home"
@@ -31,3 +35,8 @@ modules:
   about: "About"
   tags: "Tags"
 
+core:
+  no_results: "No posts found to display."
+  previous: "&laquo; Previous"
+  next: "Next &raquo;"
+  tag: "Tag"

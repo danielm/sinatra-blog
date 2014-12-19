@@ -1,36 +1,30 @@
 <% @posts.each do |post| %>
 <div class="duy-post">
   <h2 class="duy-title"><a href="<%=link post.url %>"><%= post.title.titleize %></a></h2>
-  <p class="duy-info"><%= post.published_on %> by <a href="/p/acerca.html">Daniel</a></p>
+  <p class="duy-info"><%= post.published_on %> by <a href="#">Jon Doe</a></p>
 
   <%= post.body %>
 </div>
 <% end %>
 
 <% if @posts.length == 0 %>
-    <p class="empty-blog">No se han encontrado posts... nuevo blog?</p>
+    <p class="empty-blog"><%= t.core.no_results %></p>
 <% else %>
 <ul class="pagination pagination-lg">
 <% if @have_previous %>
   <% if @have_previous > 1 %>
-  <li><a href="<%= link %>?page=<%= @have_previous %>">&laquo; Anterior</a></li>
+  <li><a href="<%= link %>?page=<%= @have_previous %>"><%= t.core.previous %></a></li>
   <% else %>
-  <li><a href="<%= link %>">&laquo; Anterior</a></li>
+  <li><a href="<%= link %>"><%= t.core.previous %></a></li>
   <% end %>
 <% else %>
-  <li class="disabled"><a>&laquo; Anterior</a></li>
+  <li class="disabled"><a><%= t.core.previous %></a></li>
 <% end %>
 
-<!--<li class="active"><a href="#">1</a></li>
-<li><a href="#">2</a></li>
-<li><a href="#">3</a></li>
-<li><a href="#">4</a></li>
-<li><a href="#">5</a></li>-->
-
 <% if @have_next %>
-  <li><a href="<%= link %>?page=<%= @have_next %>">Siguiente &raquo;</a></li>
+  <li><a href="<%= link %>?page=<%= @have_next %>"><%= t.core.next %></a></li>
 <% else %>
-  <li class="disabled"><a>Siguiente &raquo;</a></li>
+  <li class="disabled"><a><%= t.core.next %></a></li>
 <% end %>
 </ul>
 <% end %>
