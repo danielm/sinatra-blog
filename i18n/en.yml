@@ -16,11 +16,16 @@ error:
 
 panel:
   title: "Panel"
+  no_results: "No results found to display."
+  delete: "Delete"
+  edit: "Edit"
+  back: "Back to list"
+  create: "Create New"
   crud:
     title: "%1s list"
     create: "Create %1"
     created: "New %1 created"
-    edit: "Edit %1"
+    edit: "Edit %1 #%2"
     edited: "%1 #%2 changes saved"
     deleted: "%1 #%2 deleted"
   message:
@@ -30,6 +35,18 @@ panel:
     tags: "Tags"
     pages: "Pages"
     messages: "Messages"
+  fields:
+    from: "From"
+    date: "Date"
+    publish_date: "Publish Date"
+    title: "Title"
+    content: "Content"
+    submit: "Submit"
+    name: "Name"
+    tags: "Tags"
+  help:
+    date_format: "Format: (yyyy-mm-dd hh:mm:ss)"
+    tags: "Comma separated"
 
 modules:
   about: "About"

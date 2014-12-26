@@ -1,7 +1,8 @@
-<h1>Administracion <small>Edit Post #<%= @entity.id %></small></h1>
+<h1><%= t.panel.title %> <small><%= @title %>t</small></h1>
 
 <div class="admin-bar">
-  <a class="btn btn-default btn-default" href="/admin/post" role="button">&laquo; Back to list</a>
+  <a class="btn btn-default btn-default" href="/admin/post" role="button">&laquo; <%= t.panel.back %></a>
+  <a class="btn btn-danger btn-delete" title="<%= t.panel.delete %>" href="/admin/post/delete/<%= @entity.id %>" role="button"><span class="glyphicon glyphicon-trash"></span></a>
 </div>
 
 <form action="/admin/post/edit/<%= @entity.id %>" method="post" role="form">

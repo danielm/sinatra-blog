@@ -10,18 +10,18 @@
  <% end %>
 
  <div class="form-group">
-   <label for="page_title">Title:</label>
+   <label for="page_title"><%= t.panel.fields.title %>:</label>
    <br>
    <input id="page_title" class="form-control" name="entity[title]" type="text" value="<%= @entity.title %>" />  	
  </div>
 
  <div class="form-group">
-   <label for="page_body">Content:</label>
+   <label for="page_body"><%= t.panel.fields.content %>:</label>
    <br>
    <textarea rows="5" id="page_body" name="entity[body]" class="form-control tinymce" rows="10"><%= @entity.body %></textarea>
  </div>
  
- <button type="submit" class="btn btn-success">Submit</button>
+ <button type="submit" class="btn btn-success"><%= t.panel.fields.submit %></button>
 
 <% js_custom_add_file('//tinymce.cachefly.net/4.1/tinymce.min.js')  %> 
 <% js_custom_add_file('//tinymce.cachefly.net/4.1/jquery.tinymce.min.js')  %> 

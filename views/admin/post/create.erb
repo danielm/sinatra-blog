@@ -1,7 +1,7 @@
-<h1>Administracion <small>Create Post</small></h1>
+<h1><%= t.panel.title %> <small><%= @title %>t</small></h1>
 
 <div class="admin-bar">
-  <a class="btn btn-default btn-default" href="/admin/post" role="button">&laquo; Back to list</a>
+  <a class="btn btn-default btn-default" href="/admin/post" role="button">&laquo; <%= t.panel.back %></a>
 </div>
 
 <form action="/admin/post/create" method="post" role="form">

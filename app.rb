@@ -226,9 +226,9 @@ end
 get "/admin/:module/edit/:id" do
   model_name = params[:module].capitalize
   model_class = Module.const_get(model_name)
-  
-  @title = t.panel.crud.edit(model_name)
+
   @entity = model_class.find(params[:id])
+  @title = t.panel.crud.edit(model_name, @entity.id)
   
   if @entity.nil?
     halt(404)
@@ -241,8 +241,8 @@ post "/admin/:module/edit/:id" do
   model_name = params[:module].capitalize
   model_class = Module.const_get(model_name)
   
-  @title = t.panel.crud.edit(model_name)
   @entity = model_class.find(params[:id])
+  @title = t.panel.crud.edit(model_name, @entity.id)
   
   if @entity.nil?
     halt(404)
@@ -250,7 +250,7 @@ post "/admin/:module/edit/:id" do
 
   @entity.update(params[:entity])
   if @entity.save
-    redirect "/admin/#{params[:module]}", :notice => t.panel.crud.edited(model_class, params[:id])
+    redirect "/admin/#{params[:module]}", :notice => t.panel.crud.edited(model_class, @entity.id)
   end
 
   erb :"admin/#{params[:module]}/edit"
@@ -268,7 +268,7 @@ get "/admin/:module/delete/:id" do
   end
 
   if @entity.destroy
-    redirect "/admin/#{params[:module]}", :notice => t.panel.crud.deleted(model_class, params[:id])
+    redirect "/admin/#{params[:module]}", :notice => t.panel.crud.deleted(model_class, @entity.id)
   end
 end
 

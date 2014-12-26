@@ -1,11 +1,11 @@
-<h1>Administracion <small>Contact messages</small></h1>
+<h1><%= t.panel.title %> <small><%= @title %></small></h1>
 
 <table class="table table-striped">
 	<thead>
 		<tr>
 			<th>#</th>
-			<th>From</th>
-			<th>Date</th>
+			<th><%= t.panel.fields.from %></th>
+			<th><%= t.panel.fields.date %></th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
@@ -22,13 +22,13 @@
 				<%= msg.created_at %>
 			</td>
 			<td class="list-actions">
-				<a role="button" title="Delete" class="btn btn-default btn-delete" href="/admin/message/delete/<%= msg.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+				<a role="button" title="<%= t.panel.delete %>" class="btn btn-default btn-delete" href="/admin/message/delete/<%= msg.id %>"><span class="glyphicon glyphicon-trash"></span></a>
 			</td>
 		</tr>
 <% end %>
 <% if @entities.length == 0 %>
 		<tr>
-			<td colspan="4">No messages were found</td>
+			<td colspan="4"><%= t.panel.no_results %></td>
 		</tr>
 <% end %>
 	</tbody>

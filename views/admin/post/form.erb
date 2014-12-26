@@ -10,30 +10,32 @@
  <% end %>
 
  <div class="form-group">
-   <label for="post_title">Title:</label>
+   <label for="post_title"><%= t.panel.fields.title %>:</label>
    <br>
    <input id="post_title" class="form-control" name="entity[title]" type="text" value="<%= @entity.title %>" />  	
  </div>
 
  <div class="form-group ">
-   <label for="post_published_on">Publish Date (yyyy-mm-dd hh:mm:ss):</label>
+   <label for="post_published_on"><%= t.panel.fields.publish_date %>:</label>
    <br>
    <input id="post_published_on" class="form-control" name="entity[published_on]" type="text" value="<%= @entity.published_on %>" />
+   <p class="help-block"><%= t.panel.help.date_format %></p>
  </div>
 
  <div class="form-group">
-   <label for="post_body">Body:</label>
+   <label for="post_body"><%= t.panel.fields.content %>:</label>
    <br>
    <textarea rows="5" id="post_body" name="entity[body]" class="form-control tinymce" rows="10"><%= @entity.body %></textarea>
  </div>
  
  <div class="form-group ">
-   <label for="tag_names">Tags:</label>
+   <label for="tag_names"><%= t.panel.fields.tags %>:</label>
    <br>
    <input id="tag_names" class="form-control" name="entity[tag_names]" type="text" value="<%= @entity.tag_names %>" />
+   <p class="help-block"><%= t.panel.help.tags %></p>
  </div>
  
- <button type="submit" class="btn btn-success">Submit</button>
+ <button type="submit" class="btn btn-success"><%= t.panel.fields.submit %></button>
 
 <% js_custom_add_file('//tinymce.cachefly.net/4.1/tinymce.min.js')  %> 
 <% js_custom_add_file('//tinymce.cachefly.net/4.1/jquery.tinymce.min.js')  %> 

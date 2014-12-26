@@ -1,7 +1,19 @@
-- Code cleanup
+========================================================================
+Before 0.1 Tag:
+========================================================================
 - localization
-- Opengraph
 - Post categories... because people love them
+- Support multiple blogs, (by hostname)
+   * Hostname, name, description, template
+   * Analitics ID
+   * Disqus ID
+- Datetime picker for posts
+- Do not set posts as 'draft by having null date', have a bool field 
+  (checkbox or different buttons to mark it)
+========================================================================
+Some future
+========================================================================
+- Translate error messages (?)
 - Admin: make table headers sort by field
 - Tag cloud
 - Editor: * Suport page breaks
@@ -9,9 +21,17 @@
 
 - Slim form templates
 - Aaaand Sassy for css :)
+- Opengraph
+- Internal User system for /Admin (do not use HTTP Auth anymore)
+  - Multiple roles and privileges
+========================================================================
 
-- Support multiple blogs, (by hostname)
+- Code cleanup
+- Code cleanup
+- Code cleanup
+- Code cleanup
+- Code cleanup
+- Code cleanup
+..
+- Code cleanup
 
-- Site config
-  * Analitics ID
-  * Disqus ID

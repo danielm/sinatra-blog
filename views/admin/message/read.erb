@@ -5,5 +5,7 @@
 </p>
 
 <div class="admin-bar">
-  <a class="btn btn-default btn-default" href="/admin/message" role="button">&laquo; Back to list</a>
+  <a class="btn btn-default btn-default" href="/admin/message" role="button">&laquo; <%= t.panel.back %></a>
+  <a class="btn btn-danger btn-delete" title="<%= t.panel.delete %>" href="/admin/message/delete/<%= @message.id %>" role="button"><span class="glyphicon glyphicon-trash"></span></a>
 </div>
+
