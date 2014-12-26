@@ -20,10 +20,30 @@ class Tag < ActiveRecord::Base
   end
 end
 
+# Categories model
+class Category < ActiveRecord::Base
+  validates :name, presence: true, length: { minimum: 5, maximum: 255  }
+  validates :slug, uniqueness: { case_sensitive: false }
+
+  has_many :posts
+
+  before_validation :create_slug
+
+  def url
+    "#{self.slug}/"
+  end
+
+  def create_slug
+    self.slug = self.name.parameterize
+  end
+end
+
 # Posts Model
 class Post < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
+
+  belongs_to :category
 
   validates :title, presence: true, length: { minimum: 5, maximum: 255  }
   validates :slug, uniqueness: { case_sensitive: false }

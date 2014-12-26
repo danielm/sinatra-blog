@@ -1,0 +1,10 @@
+<h1><%= t.panel.title %> <small><%= @title %></small></h1>
+
+<div class="admin-bar">
+  <a class="btn btn-default btn-default" href="/admin/category" role="button">&laquo; <%= t.panel.back %></a>
+</div>
+
+<form action="/admin/category/create" method="post" role="form">
+  <%= erb :'admin/category/form', :layout => false %>
+</form>
+	

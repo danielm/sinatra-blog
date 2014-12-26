@@ -1,0 +1,34 @@
+<h1><%= t.panel.title %> <small><%= @title %></small></h1>
+
+<div class="admin-bar">
+	<a class="btn btn-default btn-success" href="/admin/category/create" role="button"><%= t.panel.create %></a>
+</div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th><%= t.panel.fields.name %></th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
+<% @entities.each do |category| %>
+		<tr>
+			<td><%= category.id %></td>
+			<td><%= category.name %></td>
+			<td class="list-actions">
+				<a role="button" title="<%= t.panel.edit %>" class="btn btn-default" href="/admin/category/edit/<%= category.id %>"><span class="glyphicon glyphicon-list"></span></a>
+
+				<a role="button" title="<%= t.panel.delete %>" class="btn btn-default btn-delete" href="/admin/category/delete/<%= category.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+			</td>
+		</tr>
+<% end %>
+<% if @entities.length == 0 %>
+		<tr>
+			<td colspan="3"><%= t.panel.no_results %></td>
+		</tr>
+<% end %>
+	</tbody>
+</table>

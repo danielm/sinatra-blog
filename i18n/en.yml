@@ -22,7 +22,7 @@ panel:
   back: "Back to list"
   create: "Create New"
   crud:
-    title: "%1s list"
+    title: "%1 list"
     create: "Create %1"
     created: "New %1 created"
     edit: "Edit %1 #%2"
@@ -35,6 +35,7 @@ panel:
     tags: "Tags"
     pages: "Pages"
     messages: "Messages"
+    categories: "Categories"
   fields:
     from: "From"
     date: "Date"
@@ -44,6 +45,7 @@ panel:
     submit: "Submit"
     name: "Name"
     tags: "Tags"
+    category: "Category"
   help:
     date_format: "Format: (yyyy-mm-dd hh:mm:ss)"
     tags: "Comma separated"
