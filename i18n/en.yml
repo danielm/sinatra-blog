@@ -35,7 +35,6 @@ panel:
     tags: "Tags"
     pages: "Pages"
     messages: "Messages"
-    categories: "Categories"
   fields:
     from: "From"
     date: "Date"
@@ -45,7 +44,6 @@ panel:
     submit: "Submit"
     name: "Name"
     tags: "Tags"
-    category: "Category"
   help:
     date_format: "Format: (yyyy-mm-dd hh:mm:ss)"
     tags: "Comma separated"

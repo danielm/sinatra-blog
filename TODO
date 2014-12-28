@@ -1,8 +1,7 @@
 ========================================================================
 Before 0.1 Tag:
 ========================================================================
-- localization
-- Post categories... because people love them
+- Date formats
 - Support multiple blogs, (by hostname)
    * Hostname, name, description, template
    * Analitics ID
@@ -13,7 +12,6 @@ Before 0.1 Tag:
 ========================================================================
 Some future
 ========================================================================
-- Paginate Tags and Categories
 - Translate error messages (?)
 - Autocomplete Tags
 - Admin: make table headers sort by field
