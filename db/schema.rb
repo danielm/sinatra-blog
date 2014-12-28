@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109135956) do
+ActiveRecord::Schema.define(version: 20141228165137) do
 
   create_table "messages", force: true do |t|
     t.string   "name",                       null: false
@@ -33,12 +33,13 @@ ActiveRecord::Schema.define(version: 20141109135956) do
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true
 
   create_table "posts", force: true do |t|
-    t.string   "title",        null: false
-    t.string   "slug",         null: false
+    t.string   "title",                    null: false
+    t.string   "slug",                     null: false
     t.datetime "published_on"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status",       default: 1
   end
 
   add_index "posts", ["slug"], name: "index_posts_on_slug", unique: true

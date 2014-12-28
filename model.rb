@@ -27,7 +27,7 @@ class Post < ActiveRecord::Base
 
   validates :title, presence: true, length: { minimum: 5, maximum: 255  }
   validates :slug, uniqueness: { case_sensitive: false }
-  validates :body, presence: true
+  validates :published_on, presence: true
 
   before_validation :create_slug
   after_save :assign_tags

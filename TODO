@@ -12,6 +12,8 @@ Before 0.1 Tag:
 Some future (in no particular order)
 ========================================================================
 - Admin: Autocmplete tags
+- Autosave
+- Screen lock
 - Posts Authors (Probably linked to CMS users, with the option to manually
   add an author text and link)
 - Date (& time) picker

@@ -10,6 +10,7 @@
 			<th>#</th>
 			<th><%= t.panel.fields.title %></th>
 			<th><%= t.panel.fields.publish_date %></th>
+			<th><%= t.panel.fields.status %></th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
@@ -19,12 +20,13 @@
 		<tr>
 			<td><%= post.id %></td>
 			<td><%= post.title %></td>
+			<td><%= post.format_date %></td>
 			<td>
-				<% if post.published_on %>
-					<%= post.format_date %>
-				<% else %>
-					<span class="draft">Draft</a>
-				<% end %>
+			  <% if post.status == 0 %>
+			    <span class="label label-warning">Draft</span>
+			  <% else %>
+			    <span class="label label-success">Available</span>
+			  <% end %>
 			</td>
 			<td class="list-actions">
 				<a role="button" title="<%= t.panel.edit %>" class="btn btn-default" href="/admin/post/edit/<%= post.id %>"><span class="glyphicon glyphicon-list"></span></a>

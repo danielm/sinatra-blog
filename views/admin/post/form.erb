@@ -22,17 +22,22 @@
    <p class="help-block"><%= t.panel.help.date_format %></p>
  </div>
 
+ <div class="form-group ">
+   <label for="tag_names"><%= t.panel.fields.tags %>:</label>
+   <br>
+   <input id="tag_names" class="form-control" name="entity[tag_names]" type="text" value="<%= @entity.tag_names %>" />
+   <p class="help-block"><%= t.panel.help.tags %></p>
+ </div>
+
  <div class="form-group">
    <label for="post_body"><%= t.panel.fields.content %>:</label>
    <br>
    <textarea rows="5" id="post_body" name="entity[body]" class="form-control tinymce" rows="10"><%= @entity.body %></textarea>
  </div>
  
- <div class="form-group ">
-   <label for="tag_names"><%= t.panel.fields.tags %>:</label>
-   <br>
-   <input id="tag_names" class="form-control" name="entity[tag_names]" type="text" value="<%= @entity.tag_names %>" />
-   <p class="help-block"><%= t.panel.help.tags %></p>
+ <div class="form-group">
+   <label class="radio-inline"><input type="radio" name="entity[status]" value="0" <%= 'checked' unless @entity.status != 0 %>><%= t.panel.fields.status_draft %></label>
+   <label class="radio-inline"><input type="radio" name="entity[status]" value="1" <%= 'checked' unless @entity.status != 1 %>><%= t.panel.fields.status_available %></label>
  </div>
  
  <button type="submit" class="btn btn-success"><%= t.panel.fields.submit %></button>

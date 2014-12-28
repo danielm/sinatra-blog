@@ -44,6 +44,9 @@ panel:
     submit: "Submit"
     name: "Name"
     tags: "Tags"
+    status: "Status"
+    status_available: "Available"
+    status_draft: "Draft"
   help:
     date_format: "Format: yyyy-mm-dd hh:mm"
     tags: "Comma separated"

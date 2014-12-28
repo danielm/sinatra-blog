@@ -35,7 +35,7 @@ end
 # Feed
 get "/feed" do
   content_type 'application/rss+xml', :charset => 'utf-8'
-  @posts = Post.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page)
+  @posts = Post.where('status = ? AND published_on <= ?', 1, Time.now).order("published_on DESC").limit(settings.per_page)
 
   erb :"feed", :layout => false 
 end
@@ -105,7 +105,7 @@ get "/" do
   @have_next = ((@page_n + 1) <= pages_n) ? (@page_n + 1) : false
   @have_previous = (@page_n > 1) ? (@page_n - 1) : false
 
-  @posts = Post.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
+  @posts = Post.where('status = ? AND published_on <= ?', 1, Time.now).order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
 
   if @posts.length == 0 && @page > 0
     halt(404)
@@ -139,7 +139,7 @@ get "/tag/:slug/" do
   @have_next = ((@page_n + 1) <= pages_n) ? (@page_n + 1) : false
   @have_previous = (@page_n > 1) ? (@page_n - 1) : false
 
-  @posts = @tag.posts.where.not({published_on: nil}).order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
+  @posts = @tag.posts.where('status = ? AND published_on <= ?', 1, Time.now).order("published_on DESC").limit(settings.per_page).offset(@page * settings.per_page)
 
   if @posts.length == 0 && @page > 0
     halt(404)
