@@ -40,7 +40,11 @@ class Post < ActiveRecord::Base
 
   def rfc_date
     Time.parse(self.published_on.to_s).rfc822()
-  end 
+  end
+  
+  def format_date(format='%Y-%m-%d - %H:%M')
+    self.published_on.strftime(format) unless self.published_on.nil?
+  end
 
   def url
     "post/" + self.published_on.strftime("%Y/%m/%d") + "/#{self.slug}.html"

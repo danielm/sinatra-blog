@@ -18,7 +18,7 @@
  <div class="form-group ">
    <label for="post_published_on"><%= t.panel.fields.publish_date %>:</label>
    <br>
-   <input id="post_published_on" class="form-control" name="entity[published_on]" type="text" value="<%= @entity.published_on %>" />
+   <input id="post_published_on" class="form-control" name="entity[published_on]" type="text" value="<%= @entity.format_date %>" />
    <p class="help-block"><%= t.panel.help.date_format %></p>
  </div>
 

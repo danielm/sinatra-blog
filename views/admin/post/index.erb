@@ -21,7 +21,7 @@
 			<td><%= post.title %></td>
 			<td>
 				<% if post.published_on %>
-					<%= post.published_on %>
+					<%= post.format_date %>
 				<% else %>
 					<span class="draft">Draft</a>
 				<% end %>

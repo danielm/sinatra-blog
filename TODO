@@ -1,17 +1,23 @@
 ========================================================================
 Before 0.1 Tag:
 ========================================================================
-- Date formats
+- Do not set posts as 'draft by having null date', have a bool field 
+  (checkbox or different buttons to mark it)
 - Support multiple blogs, (by hostname)
    * Hostname, name, description, template
    * Analitics ID
    * Disqus ID
-- Datetime picker for posts
-- Do not set posts as 'draft by having null date', have a bool field 
-  (checkbox or different buttons to mark it)
+- Add app.json file
 ========================================================================
-Some future
+Some future (in no particular order)
 ========================================================================
+- Admin: Autocmplete tags
+- Posts Authors (Probably linked to CMS users, with the option to manually
+  add an author text and link)
+- Date (& time) picker
+- Trackbacks, pingbacks
+- Menu manager: Create menu to posts, pages, external URLs etc
+- Timezone blog setting
 - Translate error messages (?)
 - Autocomplete Tags
 - Admin: make table headers sort by field

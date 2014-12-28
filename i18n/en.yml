@@ -45,7 +45,7 @@ panel:
     name: "Name"
     tags: "Tags"
   help:
-    date_format: "Format: (yyyy-mm-dd hh:mm:ss)"
+    date_format: "Format: yyyy-mm-dd hh:mm"
     tags: "Comma separated"
 
 modules:
