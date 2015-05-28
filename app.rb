@@ -26,6 +26,7 @@ configure do
   set :blog_name, ENV['BLOG_NAME'] || 'Sinatra Blog CMS'
   set :blog_description, ENV['BLOG_DESCRIPTION'] || 'Simple Blog CMS using SinatraRB'
   set :disqus_id, ENV['DISQUS_ID'] || false
+  set :analytics_id, ENV['ANALYTICS_ID'] || false
   set :date_format, ENV['DATE_FORMAT'] || '%Y-%m-%d %I:%M%p'
   
   set :author_name, ENV['AUTHOR_NAME'] || 'Jon Doe'
