@@ -31,6 +31,12 @@ configure do
   
   set :author_name, ENV['AUTHOR_NAME'] || 'Jon Doe'
   set :author_link, ENV['AUTHOR_LINK'] || 'http://github.com/danielm/sinatra-blog'
+  
+  set :default_locale, ENV['DEFAULT_LOCALE'] || 'en'
+end
+
+before do
+  session[:locale] = settings.default_locale
 end
 
 # Feed

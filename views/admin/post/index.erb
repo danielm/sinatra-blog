@@ -23,9 +23,9 @@
 			<td><%= post.format_date %></td>
 			<td>
 			  <% if post.status == 0 %>
-			    <span class="label label-warning">Draft</span>
+			    <span class="label label-warning"><%= t.panel.fields.status_draft %></span>
 			  <% else %>
-			    <span class="label label-success">Available</span>
+			    <span class="label label-success"><%= t.panel.fields.status_available %></span>
 			  <% end %>
 			</td>
 			<td class="list-actions">

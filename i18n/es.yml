@@ -1,0 +1,62 @@
+contact:
+  title: "Contactar"
+  sent: "Gracias! Tu mensaje ha sido enviado."
+  name: "Nombre"
+  email: "E-mail"
+  message: "Mensaje"
+  label: "Enviar"
+
+home:
+  title: "Inicio"
+  tag: "Tag: #%1"
+
+error:
+  not_found: "No Encontrado"
+  application_error: "Error de Aplicación"
+
+panel:
+  title: "Panel"
+  no_results: "No hay resultados que mostrar."
+  delete: "Eliminar"
+  edit: "Modificar"
+  back: "Volver al listado"
+  create: "Nuevo"
+  crud:
+    title: "Listado %1"
+    create: "Crear %1"
+    created: "%1 guardado"
+    edit: "Modificar %1 #%2"
+    edited: "Cambios a %1 #%2 guardados"
+    deleted: "%1 #%2 eliminado"
+  message:
+    read: "Mensaje #%1"
+  menu:
+    posts: "Entradas"
+    tags: "Tags"
+    pages: "Páginas"
+    messages: "Mensajes"
+  fields:
+    from: "De"
+    date: "Fecha"
+    publish_date: "Fecha de publicación"
+    title: "Título"
+    content: "Contenido"
+    submit: "Enviar"
+    name: "Nombre"
+    tags: "Tags"
+    status: "Estado"
+    status_available: "Publicado"
+    status_draft: "Borrador"
+  help:
+    date_format: "Formato: yyyy-mm-dd hh:mm"
+    tags: "Separadas por coma"
+
+modules:
+  about: "Acerca"
+  tags: "Tags"
+
+core:
+  no_results: "No se encontraron entradas para mostrar."
+  previous: "&laquo; Anterior"
+  next: "Siguiente &raquo;"
+  tag: "Tag"
