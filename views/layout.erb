@@ -73,6 +73,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a class="rss" href="<%= link 'feed' %>" target="_blank">RSS</a></li>
+            <li><a class="english" href="http://blog.daniel.com.uy/">English</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -99,6 +100,10 @@
             <p>Hello and welcome to this amazing blog.</p>
             <p>You can edit this text from the layout template, so get back to work!</p>
           </div>
+          
+          <div class="sidebar-module sidebar-module-center">
+            <script id="fedora-banner" type="text/javascript" src="http://fedoraproject.org/static/js/release-counter-ext.js?lang=es&width=200px"></script>
+          </div>
 
           <div class="sidebar-module">
             <h4><%= t.modules.tags %></h4>
@@ -116,7 +121,7 @@
 
     <div id="footer">
       <div class="container">
-        <p class="text-muted">&copy; Powered by <a href="https://github.com/danielm/sinatra-blog" target="_blank">Sinatra Blog CMS</a></p>
+        <p class="text-muted">&copy; 2015 - Daniel Morales - Powered by <a href="https://github.com/danielm/sinatra-blog" target="_blank">Sinatra Blog CMS</a></p>
       </div>
     </div>
 
@@ -132,5 +137,8 @@
 <%= js_custom_files %>
 <%= js_custom %>
 
+  <!-- GitHub Forkme Ribbon -->
+  <a href="https://github.com/danielm" id="forkme"><img style="position: absolute; top: 0; right: 0; border: 0;z-index:0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+  <!-- /GitHub Forkme Ribbon -->
   </body>
 </html>
