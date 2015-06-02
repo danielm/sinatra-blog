@@ -9,6 +9,7 @@
 		<tr>
 			<th>#</th>
 			<th><%= t.panel.fields.title %></th>
+			<th><%= t.panel.fields.status %></th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
@@ -18,6 +19,13 @@
 		<tr>
 			<td><%= page.id %></td>
 			<td><%= page.title %></td>
+			<td>
+				<% if page.status == 0 %>
+					<span class="label label-warning">Draft</span>
+				<% else %>
+					<span class="label label-success">Available</span>
+				<% end %>
+ 			</td>
 			<td class="list-actions">
 				<a role="button" title="<%= t.panel.edit %>" class="btn btn-default" href="/admin/page/edit/<%= page.id %>"><span class="glyphicon glyphicon-list"></span></a>
 
@@ -27,7 +35,7 @@
 <% end %>
 <% if @entities.length == 0 %>
 		<tr>
-			<td colspan="3"><%= t.panel.no_results %></td>
+			<td colspan="4"><%= t.panel.no_results %></td>
 		</tr>
 <% end %>
 	</tbody>
