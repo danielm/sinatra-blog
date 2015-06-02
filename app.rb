@@ -306,6 +306,7 @@ helpers do
 
   def menu
     Page.all.order('title ASC')
+    Page.where('status = ?', 1).order("title ASC")
   end
 
   def title
