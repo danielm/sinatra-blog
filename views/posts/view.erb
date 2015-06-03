@@ -12,7 +12,7 @@
   <% end %>
 </div>
 
-<% if settings.disqus_id %>
+<% if settings.disqus_id and @post.allow_comments %>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
