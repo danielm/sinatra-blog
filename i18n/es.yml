@@ -47,6 +47,9 @@ panel:
     status: "Estado"
     status_available: "Publicado"
     status_draft: "Borrador"
+    allow_comments: "Permitir Comentarios"
+    created_at: "Fecha Creación"
+    updated_at: "Fecha Modificación"
   help:
     date_format: "Formato: yyyy-mm-dd hh:mm"
     tags: "Separadas por coma"
@@ -60,3 +63,5 @@ core:
   previous: "&laquo; Anterior"
   next: "Siguiente &raquo;"
   tag: "Tag"
+  say_yes: "Si"
+  say_no: "No"
