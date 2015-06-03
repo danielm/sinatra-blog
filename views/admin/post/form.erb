@@ -8,36 +8,67 @@
       </ul>
     </div>
  <% end %>
-
- <div class="form-group">
-   <label for="post_title"><%= t.panel.fields.title %>:</label>
-   <br>
-   <input id="post_title" class="form-control" name="entity[title]" type="text" value="<%= @entity.title %>" />  	
- </div>
-
- <div class="form-group ">
-   <label for="post_published_on"><%= t.panel.fields.publish_date %>:</label>
-   <br>
-   <input id="post_published_on" class="form-control" name="entity[published_on]" type="text" value="<%= @entity.format_date %>" />
-   <p class="help-block"><%= t.panel.help.date_format %></p>
- </div>
-
- <div class="form-group ">
-   <label for="tag_names"><%= t.panel.fields.tags %>:</label>
-   <br>
-   <input id="tag_names" class="form-control" name="entity[tag_names]" type="text" value="<%= @entity.tag_names %>" />
-   <p class="help-block"><%= t.panel.help.tags %></p>
- </div>
-
- <div class="form-group">
-   <label for="post_body"><%= t.panel.fields.content %>:</label>
-   <br>
-   <textarea rows="5" id="post_body" name="entity[body]" class="form-control tinymce" rows="10"><%= @entity.body %></textarea>
- </div>
  
- <div class="form-group">
-   <label class="radio-inline"><input type="radio" name="entity[status]" value="0" <%= 'checked' unless @entity.status != 0 %>><%= t.panel.fields.status_draft %></label>
-   <label class="radio-inline"><input type="radio" name="entity[status]" value="1" <%= 'checked' unless @entity.status != 1 %>><%= t.panel.fields.status_available %></label>
+ <div role="tabpanel">
+   <ul class="nav nav-tabs">
+     <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+     <li role="presentation"><a href="#meta" aria-controls="meta" role="tab" data-toggle="tab">Meta</a></li>
+   </ul>
+
+   <div class="tab-content">
+     <div role="tabpanel" class="tab-pane active" id="general">
+       <div class="form-group">
+         <label for="post_title"><%= t.panel.fields.title %>:</label>
+         <br>
+         <input id="post_title" class="form-control" name="entity[title]" type="text" value="<%= @entity.title %>" />  	
+       </div>
+
+       <div class="form-group">
+         <label for="post_body"><%= t.panel.fields.content %>:</label>
+         <br>
+         <textarea rows="5" id="post_body" name="entity[body]" class="form-control tinymce"><%= @entity.body %></textarea>
+       </div>
+       
+       <div class="form-group ">
+         <label for="tag_names"><%= t.panel.fields.tags %>:</label>
+         <br>
+         <input id="tag_names" class="form-control" name="entity[tag_names]" type="text" value="<%= @entity.tag_names %>" />
+         <p class="help-block"><%= t.panel.help.tags %></p>
+       </div>
+     </div>
+     
+     <div role="tabpanel" class="tab-pane" id="meta">
+       <div class="form-group ">
+         <label for="post_published_on"><%= t.panel.fields.publish_date %>:</label>
+         <br>
+         <input id="post_published_on" class="form-control" name="entity[published_on]" type="text" value="<%= @entity.format_date %>" />
+         <p class="help-block"><%= t.panel.help.date_format %></p>
+       </div>
+     
+       <div class="form-group">
+         <label><%= t.panel.fields.status %>:</label><br />
+         <label class="radio-inline"><input type="radio" name="entity[status]" value="0" <%= 'checked' unless @entity.status != 0 %>><%= t.panel.fields.status_draft %></label>
+         <label class="radio-inline"><input type="radio" name="entity[status]" value="1" <%= 'checked' unless @entity.status != 1 %>><%= t.panel.fields.status_available %></label>
+       </div>
+ 
+       <div class="form-group">
+         <label><%= t.panel.fields.allow_comments %>:</label><br />
+         <label class="radio-inline"><input type="radio" name="entity[allow_comments]" value="1" <%= 'checked' if @entity.allow_comments %>><%= t.core.say_yes %></label>
+         <label class="radio-inline"><input type="radio" name="entity[allow_comments]" value="0" <%= 'checked' if !@entity.allow_comments %>><%= t.core.say_no %></label>
+       </div>
+       
+       <div class="form-group">
+         <label><%= t.panel.fields.created_at %>:</label><br />
+         <%= @entity.created_at %>
+       </div>
+       
+       <div class="form-group">
+         <label><%= t.panel.fields.updated_at %>:</label><br />
+         <%= @entity.updated_at %>
+       </div>
+     </div>
+     
+   </div>
  </div>
  
  <button type="submit" class="btn btn-success"><%= t.panel.fields.submit %></button>

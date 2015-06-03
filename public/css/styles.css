@@ -190,3 +190,12 @@ code {
   background:url(img/rss.png) left center no-repeat;
   padding-left:28px !important;
 }
+
+/* Admin only *********************************************************/
+.tab-pane {
+  padding: 10px;
+}
+
+form {
+  margin-bottom: 20px;
+}
